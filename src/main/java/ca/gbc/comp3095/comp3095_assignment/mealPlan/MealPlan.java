@@ -11,11 +11,27 @@ import java.util.Date;
 @Table(name = "mealPlans")
 public class MealPlan extends BaseEntity {
 
+    @ManyToOne
+    @JoinColumn(name= "recipe_id")
+    private Recipe recipe;
+
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
-    @ManyToOne
-    @JoinColumn(name= "recipe_id")
-    private Recipe recipe;
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
 }

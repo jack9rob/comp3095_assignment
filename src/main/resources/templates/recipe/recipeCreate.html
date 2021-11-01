@@ -7,8 +7,6 @@
 <body>
     <form th:object="${recipe}" th:action="@{/recipes/new}" method="post">
         <input type="text" th:field="*{title}"/>
-        <input type="text" th:field="*{instructions}"/>
-        <input type="text" th:field="*{ingredients}"/>
         <input type="submit" value="Submit"/>
     </form>
 
