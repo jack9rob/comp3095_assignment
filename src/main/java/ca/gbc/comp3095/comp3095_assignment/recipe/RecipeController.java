@@ -4,6 +4,7 @@ import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.Ingredient;
 import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.IngredientRepository;
 import ca.gbc.comp3095.comp3095_assignment.recipe.step.Step;
 import ca.gbc.comp3095.comp3095_assignment.recipe.step.StepRepository;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.net.Authenticator;
+import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 
@@ -39,9 +42,10 @@ public class RecipeController {
     }
 
     @GetMapping("/recipes/new")
-    public String initCreateRecipe(Model model) {
+    public String initCreateRecipe(Model model, Principal principal) {
         Recipe recipe = new Recipe();
         model.addAttribute("recipe", recipe);
+        model.addAttribute("user", principal.getName());
         return "recipe/recipeCreate";
     }
 

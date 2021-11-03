@@ -8,6 +8,8 @@
 
 <h2>Recipes</h2>
 
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+
 <div th:each="recipe : ${recipes}">
     <p th:text="${recipe.title}"></p>
 </div>

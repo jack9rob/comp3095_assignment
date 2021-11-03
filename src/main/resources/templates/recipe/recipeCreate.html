@@ -5,10 +5,11 @@
     <title>New Recipe</title>
 </head>
 <body>
+<h1>[[${#httpServletRequest.remoteUser}]]</h1>
     <form th:object="${recipe}" th:action="@{/recipes/new}" method="post">
         <input type="text" th:field="*{title}"/>
+        <input type="hidden" name="username" th:value="${user}" />
         <input type="submit" value="Submit"/>
     </form>
-
 </body>
 </html>

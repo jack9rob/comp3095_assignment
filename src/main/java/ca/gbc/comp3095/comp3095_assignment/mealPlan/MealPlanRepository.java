@@ -13,6 +13,8 @@ public interface MealPlanRepository extends Repository<MealPlan, Long> {
     @Query("select m from MealPlan m")
     List<MealPlan> getAll();
 
+    // get meal in week
+
     void save(MealPlan mealPlan);
 
 }
