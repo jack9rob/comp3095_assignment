@@ -4,7 +4,8 @@ import ca.gbc.comp3095.comp3095_assignment.mealPlan.MealPlan;
 import ca.gbc.comp3095.comp3095_assignment.model.BaseEntity;
 import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.Ingredient;
 import ca.gbc.comp3095.comp3095_assignment.recipe.step.Step;
-import org.springframework.security.core.userdetails.User;
+import ca.gbc.comp3095.comp3095_assignment.user.User;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -14,8 +15,9 @@ import java.util.Set;
 @Table(name = "recipes")
 public class Recipe extends BaseEntity {
 
-    @Column
-    private String username;
+    @ManyToOne
+    @JoinColumn(name= "user_id")
+    private User user;
 
     @Column
     private String title;
@@ -83,11 +85,11 @@ public class Recipe extends BaseEntity {
         this.ingredients = ingredients;
     }
 
-    public String getUsername() {
-        return username;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

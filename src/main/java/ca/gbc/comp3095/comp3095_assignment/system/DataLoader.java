@@ -6,9 +6,12 @@ import ca.gbc.comp3095.comp3095_assignment.recipe.Recipe;
 import ca.gbc.comp3095.comp3095_assignment.recipe.RecipeRepository;
 import ca.gbc.comp3095.comp3095_assignment.recipe.step.Step;
 import ca.gbc.comp3095.comp3095_assignment.recipe.step.StepRepository;
+import ca.gbc.comp3095.comp3095_assignment.user.User;
+import ca.gbc.comp3095.comp3095_assignment.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -19,23 +22,36 @@ public class DataLoader implements ApplicationRunner {
     private final RecipeRepository recipes;
     private final MealPlanRepository mealPlans;
     private final StepRepository steps;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public DataLoader(RecipeRepository recipes, MealPlanRepository mealPlans, StepRepository steps) {
+    public DataLoader(RecipeRepository recipes, MealPlanRepository mealPlans, StepRepository steps, UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.recipes = recipes;
         this.mealPlans = mealPlans;
         this.steps = steps;
+        this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public void run(ApplicationArguments args) {
+        // users
+        User user = new User();
+        user.setUsername("user");
+        user.setPassword(bCryptPasswordEncoder.encode("password"));
+        userRepository.save(user);
+
         // recipes
         Recipe recipe = new Recipe();
         recipe.setTitle("Title");
         recipe.setDescription("My First Recipe");
+        recipe.setUser(user);
         recipes.save(recipe);
+
         Recipe recipe1 = new Recipe();
         recipe1.setTitle("Title2");
         recipe1.setDescription("My Second Recipe");
+        recipe1.setUser(user);
         recipes.save(recipe1);
 
         // meal plans
@@ -55,5 +71,7 @@ public class DataLoader implements ApplicationRunner {
         step.setRecipe(recipe);
         step.setStepNumber(1);
         steps.save(step);
+
+
     }
 }

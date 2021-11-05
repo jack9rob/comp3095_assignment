@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1 th:text="${user.username}"></h1>
+
+    <div th:each="recipe : ${user.getRecipes()}">
+        <p th:text="${recipe.title}"></p>
+    </div>
+
+</body>
+</html>

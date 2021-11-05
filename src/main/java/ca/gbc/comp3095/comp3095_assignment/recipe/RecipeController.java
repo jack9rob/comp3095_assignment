@@ -4,7 +4,8 @@ import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.Ingredient;
 import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.IngredientRepository;
 import ca.gbc.comp3095.comp3095_assignment.recipe.step.Step;
 import ca.gbc.comp3095.comp3095_assignment.recipe.step.StepRepository;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import ca.gbc.comp3095.comp3095_assignment.user.User;
+import ca.gbc.comp3095.comp3095_assignment.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.net.Authenticator;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
@@ -26,12 +26,14 @@ public class RecipeController {
     private final RecipeRepository recipes;
     private final StepRepository steps;
     private final IngredientRepository ingredients;
+    private final UserRepository users;
 
     @Autowired
-    public RecipeController(RecipeRepository recipes, StepRepository steps, IngredientRepository ingredients) {
+    public RecipeController(RecipeRepository recipes, StepRepository steps, IngredientRepository ingredients, UserRepository users) {
         this.recipes = recipes;
         this.steps = steps;
         this.ingredients = ingredients;
+        this.users = users;
     }
 
     @RequestMapping("/recipes")
@@ -42,18 +44,20 @@ public class RecipeController {
     }
 
     @GetMapping("/recipes/new")
-    public String initCreateRecipe(Model model, Principal principal) {
+    public String initCreateRecipe(Model model) {
         Recipe recipe = new Recipe();
+
         model.addAttribute("recipe", recipe);
-        model.addAttribute("user", principal.getName());
         return "recipe/recipeCreate";
     }
 
     @PostMapping("/recipes/new")
-    public String processCreateRecipe(Recipe recipe, BindingResult result) {
+    public String processCreateRecipe(Recipe recipe, BindingResult result, Principal principal) {
         if(result.hasErrors()) {
             return "recipe/recipeCreate";
         } else {
+            User user = users.findByUsername(principal.getName());
+            recipe.setUser(user);
             this.recipes.save(recipe);
             return "redirect:/recipes";
         }
