@@ -14,6 +14,9 @@ public interface MealPlanRepository extends Repository<MealPlan, Long> {
     List<MealPlan> getAll();
 
     // get meal in week
+    //List<MealPlan> getByWeek(Long userId, String fromDate, String toDate);
+
+    //List<MealPlan> getByUser(Long userId);
 
     void save(MealPlan mealPlan);
 

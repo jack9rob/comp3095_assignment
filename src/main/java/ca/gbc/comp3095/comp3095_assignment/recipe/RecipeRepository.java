@@ -24,6 +24,9 @@ public interface RecipeRepository extends Repository<Recipe, Long> {
     @Query("SELECT recipe from Recipe recipe WHERE :title LIKE LOWER(TRIM(recipe.title)) ")
     List<Recipe> findByTitle();
 
+    @Transactional(readOnly = true)
+    @Query("SELECT recipe from Recipe recipe WHERE lower(recipe.title) LIKE %:title% ")
+    List<Recipe> searchByTitle(String title);
 
     void save(Recipe recipe);
 

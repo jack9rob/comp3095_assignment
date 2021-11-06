@@ -11,5 +11,17 @@
         <p th:text="${recipe.title}"></p>
     </div>
 
+    <h1>Favourites</h1>
+    <div th:each="favourite : ${user.getFavourites()}">
+        <p th:text="${favourite.recipe.title}"></p>
+    </div>
+
+    <h1>Plan</h1>
+    <div th:each="plan : ${user.getMealPlans()}">
+        <p th:text="${plan.recipe.title}"></p>
+        <p th:text="${plan.date}"></p>
+    </div>
+
+
 </body>
 </html>

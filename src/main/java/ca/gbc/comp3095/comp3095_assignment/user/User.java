@@ -2,6 +2,7 @@ package ca.gbc.comp3095.comp3095_assignment.user;
 
 import ca.gbc.comp3095.comp3095_assignment.mealPlan.MealPlan;
 import ca.gbc.comp3095.comp3095_assignment.model.BaseEntity;
+import ca.gbc.comp3095.comp3095_assignment.recipe.FavouriteRecipe;
 import ca.gbc.comp3095.comp3095_assignment.recipe.Recipe;
 
 import javax.persistence.*;
@@ -20,12 +21,35 @@ public class User extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Recipe> recipes = new HashSet<>();
 
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<MealPlan> mealPlans = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<FavouriteRecipe> favourites = new HashSet<>();
+
     public Set<Recipe> getRecipes() {
         return recipes;
     }
 
     public void setRecipes(Set<Recipe> recipes) {
         this.recipes = recipes;
+    }
+
+    public Set<MealPlan> getMealPlans() {
+        return mealPlans;
+    }
+
+    public void setMealPlans(Set<MealPlan> mealPlans) {
+        this.mealPlans = mealPlans;
+    }
+
+    public Set<FavouriteRecipe> getFavourites() {
+        return favourites;
+    }
+
+    public void setFavourites(Set<FavouriteRecipe> favourites) {
+        this.favourites = favourites;
     }
 
     public String getUsername() {

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>New Meal Plan</title>
+</head>
+<body>
+<form th:object="${mealPlan}" th:action="@{/recipes/plan}" method="post">
+  <input type="date" th:field="*{date}"/>
+  <input type="hidden" th:value="${recipeId}" name="recipeId"/>
+  <input type="hidden" th:field="*{user}" th:value="${userId}"/>
+  <input type="submit" value="Submit"/>
+</form>
+
+</body>
+</html>

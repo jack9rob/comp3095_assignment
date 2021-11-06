@@ -5,37 +5,30 @@
     <title>Title</title>
 </head>
 <body>
+    <div th:if="${isOwner}">
+        <!-- Step Creation -->
+        <h2>Add a new Step</h2>
+        <form th:object="${step}" th:action="@{/recipes/new/step}" method="post">
+            <input type="text" th:field="*{stepDescription}"/>
+            <input type="hidden" th:field="*{stepNumber}" th:value=1/>
+            <input type="hidden" name="recipeId" th:value="${recipe.getId()}"/>
+            <input type="submit" value="Submit"/>
+        </form>
+
+        <!-- Ingredient Creation -->
+        <h2>Add a new Ingredient</h2>
+        <form th:object="${ingredient}" th:action="@{/ingredient/new}" method="post">
+            <input type="text" th:field="*{name}"/>
+            <input type="text" th:field="*{amount}"/>
+            <input type="hidden" name="recipeId" th:value="${recipe.getId()}"/>
+            <input type="submit" value="Submit"/>
+        </form>
+    </div>
     <h1 th:text="${recipe.getTitle()}"></h1>
     <div>
         <p th:text="${recipe.description}"></p>
     </div>
 
-    <h2 th:text="Steps"></h2>
-    <div th:each="step : ${steps}">
-        <p th:text="${step.stepNumber} + ${step.stepDescription}"></p>
-    </div>
 
-    <h2 th:text="Ingredients"></h2>
-    <div th:each="ingredient : ${recipe.ingredients}">
-        <p th:text="${ingredient.name} + ${ingredient.amount}"></p>
-    </div>
-
-<!-- Step Creation -->
-    <h2>Add a new Step</h2>
-    <form th:object="${step}" th:action="@{/recipes/new/step}" method="post">
-        <input type="text" th:field="*{stepDescription}"/>
-        <input type="hidden" th:field="*{stepNumber}" th:value=1/>
-        <input type="hidden" name="recipeId" th:value="${recipe.getId()}"/>
-        <input type="submit" value="Submit"/>
-    </form>
-
-<!-- Ingredient Creation -->
-    <h2>Add a new Ingredient</h2>
-    <form th:object="${ingredient}" th:action="@{/ingredient/new}" method="post">
-        <input type="text" th:field="*{name}"/>
-        <input type="text" th:field="*{amount}"/>
-        <input type="hidden" name="recipeId" th:value="${recipe.getId()}"/>
-        <input type="submit" value="Submit"/>
-    </form>
 </body>
 </html>

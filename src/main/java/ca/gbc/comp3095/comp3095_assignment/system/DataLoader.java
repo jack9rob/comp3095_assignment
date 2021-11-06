@@ -41,6 +41,11 @@ public class DataLoader implements ApplicationRunner {
         user.setPassword(bCryptPasswordEncoder.encode("password"));
         userRepository.save(user);
 
+        User user1 = new User();
+        user1.setUsername("jack");
+        user1.setPassword(bCryptPasswordEncoder.encode("password"));
+        userRepository.save(user1);
+
         // recipes
         Recipe recipe = new Recipe();
         recipe.setTitle("Title");
@@ -58,11 +63,13 @@ public class DataLoader implements ApplicationRunner {
         MealPlan mealPlan = new MealPlan();
         mealPlan.setDate(new Date());
         mealPlan.setRecipe(recipe);
+        mealPlan.setUser(user);
         mealPlans.save(mealPlan);
 
         MealPlan mealPlan1 = new MealPlan();
         mealPlan1.setDate(new Date());
         mealPlan1.setRecipe(recipe);
+        mealPlan1.setUser(user);
         mealPlans.save(mealPlan1);
 
         // steps
@@ -71,7 +78,6 @@ public class DataLoader implements ApplicationRunner {
         step.setRecipe(recipe);
         step.setStepNumber(1);
         steps.save(step);
-
 
     }
 }

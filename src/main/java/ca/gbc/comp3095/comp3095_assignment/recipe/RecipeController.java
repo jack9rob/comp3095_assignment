@@ -1,5 +1,7 @@
 package ca.gbc.comp3095.comp3095_assignment.recipe;
 
+import ca.gbc.comp3095.comp3095_assignment.mealPlan.MealPlan;
+import ca.gbc.comp3095.comp3095_assignment.mealPlan.MealPlanRepository;
 import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.Ingredient;
 import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.IngredientRepository;
 import ca.gbc.comp3095.comp3095_assignment.recipe.step.Step;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
-import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -27,19 +29,26 @@ public class RecipeController {
     private final StepRepository steps;
     private final IngredientRepository ingredients;
     private final UserRepository users;
+    private final FavouriteRecipeRepository favourites;
+    private final MealPlanRepository mealPlans;
 
     @Autowired
-    public RecipeController(RecipeRepository recipes, StepRepository steps, IngredientRepository ingredients, UserRepository users) {
+    public RecipeController(RecipeRepository recipes, StepRepository steps, IngredientRepository ingredients, UserRepository users, FavouriteRecipeRepository favourites, MealPlanRepository mealPlans) {
         this.recipes = recipes;
         this.steps = steps;
         this.ingredients = ingredients;
         this.users = users;
+        this.favourites = favourites;
+        this.mealPlans = mealPlans;
     }
 
     @RequestMapping("/recipes")
-    public String findAll(Model model) {
-        Collection<Recipe> results = this.recipes.getAll();
-        model.addAttribute("recipes", results);
+    public String findAll(Model model, String search) {
+        if(search != null) {
+            model.addAttribute("recipes", this.recipes.searchByTitle(search));
+        } else {
+            model.addAttribute("recipes", this.recipes.getAll());
+        }
         return "recipe/recipeList";
     }
 
@@ -64,15 +73,21 @@ public class RecipeController {
     }
 
     @RequestMapping("/recipes/{recipeId}")
-    public String viewRecipe(@PathVariable("recipeId") Long recipeId, Model model) {
+    public String viewRecipe(@PathVariable("recipeId") Long recipeId, Model model, Principal principal) {
         Recipe recipe = this.recipes.findById(recipeId);
+        Boolean isOwner = false;
+        if(principal.getName().equals(recipe.getUser().getUsername())) {
+            isOwner = true;
+        }
         model.addAttribute("recipe", recipe);
         model.addAttribute("step", new Step());
         model.addAttribute("ingredient", new Ingredient());
         model.addAttribute("steps", this.steps.getStepOrderStepNumber(recipeId));
+        model.addAttribute("isOwner", isOwner);
         return "recipe/recipeView";
     }
-    // move to step controller probably
+
+    // move to other controller maybe
     @PostMapping("/recipes/new/step")
     public String processAddStep(Long recipeId, Step step, BindingResult result) {
         Recipe recipe = this.recipes.findById(recipeId);
@@ -89,5 +104,39 @@ public class RecipeController {
             this.steps.save(step);
         }
         return String.format("redirect:/recipes/%d", recipeId);
+    }
+
+    @RequestMapping("recipes/{recipeId}/favourite")
+    public String addFavourite(@PathVariable("recipeId") Long recipeId, Principal principal) {
+        Recipe recipe = this.recipes.findById(recipeId);
+        User user = this.users.findByUsername(principal.getName());
+        if(!user.getFavourites().contains(recipe) && recipe.getUser().getId() != user.getId()) {
+            FavouriteRecipe favouriteRecipe = new FavouriteRecipe();
+            favouriteRecipe.setRecipe(recipe);
+            favouriteRecipe.setUser(user);
+            this.favourites.save(favouriteRecipe);
+        }
+        return String.format("redirect:/recipes/%d", recipeId);
+    }
+
+    @GetMapping("recipes/{recipeId}/plan")
+    public String initCreateMealPlan(@PathVariable("recipeId") Long recipeId, Model model, Principal principal) {
+        User user = this.users.findByUsername(principal.getName());
+        MealPlan mealPlan = new MealPlan();
+        model.addAttribute("mealPlan", mealPlan); // idk if we need this
+        model.addAttribute("recipeId", recipeId.longValue());
+        model.addAttribute("userId", user.getId());
+        return "mealPlan/mealPlanCreate";
+    }
+
+    @PostMapping("recipes/plan")
+    public String processCreateMealPlan(Long recipeId, MealPlan mealPlan, Principal principal) {
+        Recipe recipe = this.recipes.findById(recipeId);
+        User user = this.users.findByUsername(principal.getName());
+        mealPlan.setRecipe(recipe);
+        mealPlan.setUser(user);
+        this.mealPlans.save(mealPlan);
+
+        return "redirect:/profile";
     }
 }

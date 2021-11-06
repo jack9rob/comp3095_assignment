@@ -42,6 +42,9 @@ public class UserController {
         if(users.findByUsername(username) != null) {
             model.addAttribute("error", username + " is already taken");
             return "user/userRegistration";
+        } else if(!password.equals(confirmPassword)) {
+            model.addAttribute("passwords do not match");
+            return "user/userRegistration";
         }
         User newUser = new User();
         newUser.setUsername(username);
