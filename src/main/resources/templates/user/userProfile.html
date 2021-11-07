@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Profile</title>
 </head>
 <body>
-    <h1 th:text="${user.username}"></h1>
-
-    <div th:each="recipe : ${user.getRecipes()}">
-        <p th:text="${recipe.title}"></p>
+<div th:replace="common/navbar :: common-navbar"></div>
+    <div class="container d-flex flex-column justify-content-center">
+        <h1 th:text="${user.username}"></h1>
+        <hr>
+        <br>
+        <h1 class="text-center">Recipes</h1>
+        <div th:each="recipe : ${user.getRecipes()}">
+            <p th:text="${recipe.title}"></p>
+        </div>
+        <hr>
+        <br>
+        <h1 class="text-center">Favourites</h1>
+        <div th:each="favourite : ${user.getFavourites()}">
+            <p th:text="${favourite.recipe.title}"></p>
+        </div>
+        <hr>
+        <br>
+        <h1 class="text-center">Meal Plan</h1>
+        <div th:each="plan : ${user.getMealPlans()}">
+            <p th:text="${plan.recipe.title}"></p>
+            <p th:text="${plan.date}"></p>
+        </div>
     </div>
-
-    <h1>Favourites</h1>
-    <div th:each="favourite : ${user.getFavourites()}">
-        <p th:text="${favourite.recipe.title}"></p>
-    </div>
-
-    <h1>Plan</h1>
-    <div th:each="plan : ${user.getMealPlans()}">
-        <p th:text="${plan.recipe.title}"></p>
-        <p th:text="${plan.date}"></p>
-    </div>
-
-
 </body>
 </html>
