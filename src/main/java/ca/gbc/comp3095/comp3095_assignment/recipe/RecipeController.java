@@ -1,3 +1,10 @@
+/*
+Project: Recipe Site
+Assignment: 1
+Author: Jack Robinson, Fatih Camgoz, Jong-In Yoon
+Date: November 7th
+Description: main controller, used to create recipes, ingredients, steps, meal plans
+ */
 package ca.gbc.comp3095.comp3095_assignment.recipe;
 
 import ca.gbc.comp3095.comp3095_assignment.mealPlan.MealPlan;
@@ -106,7 +113,7 @@ public class RecipeController {
         return String.format("redirect:/recipes/%d", recipeId);
     }
 
-    @RequestMapping("recipes/{recipeId}/favourite")
+    @RequestMapping("favourite/{recipeId}")
     public String addFavourite(@PathVariable("recipeId") Long recipeId, Principal principal) {
         Recipe recipe = this.recipes.findById(recipeId);
         User user = this.users.findByUsername(principal.getName());
@@ -119,11 +126,11 @@ public class RecipeController {
         return String.format("redirect:/recipes/%d", recipeId);
     }
 
-    @GetMapping("recipes/{recipeId}/plan")
+    @GetMapping("plan/{recipeId}")
     public String initCreateMealPlan(@PathVariable("recipeId") Long recipeId, Model model, Principal principal) {
         User user = this.users.findByUsername(principal.getName());
         MealPlan mealPlan = new MealPlan();
-        model.addAttribute("mealPlan", mealPlan); // idk if we need this
+        model.addAttribute("mealPlan", mealPlan);
         model.addAttribute("recipeId", recipeId.longValue());
         model.addAttribute("userId", user.getId());
         return "mealPlan/mealPlanCreate";

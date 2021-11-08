@@ -1,3 +1,11 @@
+/*
+Project: Recipe Site
+Assignment: 1
+Author: Jack Robinson, Fatih Camgoz, Jong-In Yoon
+Date: November 7th
+Description: class logins verifies and logins in users from the database
+ */
+
 package ca.gbc.comp3095.comp3095_assignment.user;
 
 import org.springframework.beans.factory.annotation.Autowired;

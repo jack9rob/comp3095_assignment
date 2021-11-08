@@ -1,3 +1,11 @@
+/*
+Project: Recipe Site
+Assignment: 1
+Author: Jack Robinson, Fatih Camgoz, Jong-In Yoon
+Date: November 7th
+Description: class for the steps in the recipe. each recipe can have multiple steps
+ */
+
 package ca.gbc.comp3095.comp3095_assignment.recipe.step;
 
 import ca.gbc.comp3095.comp3095_assignment.model.BaseEntity;

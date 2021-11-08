@@ -1,5 +1,12 @@
 package ca.gbc.comp3095.comp3095_assignment.mealPlan;
 
+/*
+Project: Recipe Site
+Assignment: 1
+Author: Jack Robinson, Fatih Camgoz, Jong-In Yoon
+Date: November 7th
+Description: Repo to save and get all meal plans
+ */
 import ca.gbc.comp3095.comp3095_assignment.recipe.Recipe;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;

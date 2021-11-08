@@ -1,3 +1,11 @@
+/*
+Project: Recipe Site
+Assignment: 1
+Author: Jack Robinson, Fatih Camgoz, Jong-In Yoon
+Date: November 7th
+Description: repo for recipes. get all recipes, search by id and title, and save recipes to the database
+ */
+
 package ca.gbc.comp3095.comp3095_assignment.recipe;
 
 import org.springframework.data.jpa.repository.JpaRepository;

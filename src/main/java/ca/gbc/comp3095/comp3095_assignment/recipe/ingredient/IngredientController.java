@@ -1,3 +1,10 @@
+/*
+Project: Recipe Site
+Assignment: 1
+Author: Jack Robinson, Fatih Camgoz, Jong-In Yoon
+Date: November 7th
+Description: Used to create a new ingredient for a recipe
+ */
 package ca.gbc.comp3095.comp3095_assignment.recipe.ingredient;
 
 import ca.gbc.comp3095.comp3095_assignment.recipe.Recipe;

@@ -12,29 +12,54 @@
         <hr>
         <br>
         <div>
-            <p th:text="${recipe.description}"></p>
+            <h5 th:text="${recipe.description}"></h5>
         </div>
     </div>
+
+    <br>
+    <br>
+
+    <!-- Step Display -->
+    <h4>Steps</h4>
+    <div th:each="step: ${steps}">
+        <p th:text="${step.stepNumber + '. ' + step.stepDescription}"></p>
+    </div>
+
+    <h4>Ingredients</h4>
+    <div th:each="ingr: ${recipe.ingredients}">
+        <p th:text="${ingr.name + ' - ' + ingr.amount}"></p>
+    </div>
+
+
     <div th:if="${isOwner}">
         <!-- Step Creation -->
         <h4 class="text-center">Add a new Step</h4>
-        <form th:object="${step}" th:action="@{/recipes/new/step}" method="post">
-            <div class="form-group"><label> Step description: <input class="form-control input-lg" type="text" th:field="*{stepDescription}"/> </label></div>
-            <br>
-            <div class="form-group"><label> Step Number: <input class="form-control input-lg" type="hidden" th:field="*{stepNumber}" th:value=1/> </label></div>
-            <br>
-            <div class="form-group"><input class="form-control input-lg" name="recipeId" type="hidden" th:value="${recipe.getId()}"/></div>
-            <div class="form-group"><input class="btn btn-primary mt-2" type="submit" value="Add Step"/></div>
-        </form>
+        <div class="d-flex justify-content-center">
+            <div>
+                <form th:object="${step}" th:action="@{/recipes/new/step}" method="post">
+                    <div class="form-group"><label> Step description: <input class="form-control input-lg" type="text" th:field="*{stepDescription}"/> </label></div>
+                    <br>
+                    <div class="form-group"><input class="form-control input-lg" name="recipeId" type="hidden" th:value="${recipe.getId()}"/></div>
+                    <div class="form-group"><input class="btn btn-primary mt-2" type="submit" value="Add Step"/></div>
+                </form>
+            </div>
+        </div>
+
+
         <br>
         <!-- Ingredient Creation -->
+
         <h4 class="text-center">Add a new Ingredient</h4>
-        <form th:object="${ingredient}" th:action="@{/ingredient/new}" method="post">
-            <div class="form-group"><label> Ingredient Name: <input type="text" th:field="*{name}"/></label></div>
-            <div class="form-group"><label> Ingredient Amount:  <input type="text" th:field="*{amount}"/></label></div>
-            <input type="hidden" name="recipeId" th:value="${recipe.getId()}"/>
-            <div class="form-group"><input class="btn btn-primary mt-2" type="submit" value="Add Ingredient"/></div>
-        </form>
+        <div class="d-flex justify-content-center">
+            <div>
+                <form th:object="${ingredient}" th:action="@{/ingredient/new}" method="post">
+                    <div class="form-group"><label> Ingredient Name: <input class="form-control" type="text" th:field="*{name}"/></label></div>
+                    <div class="form-group"><label> Ingredient Amount:  <input class="form-control" type="text" th:field="*{amount}"/></label></div>
+                    <input type="hidden" name="recipeId" th:value="${recipe.getId()}"/>
+                    <div class="form-group"><input class="btn btn-primary mt-2" type="submit" value="Add Ingredient"/></div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 </body>

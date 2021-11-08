@@ -1,3 +1,10 @@
+/*
+Project: Recipe Site
+Assignment: 1
+Author: Jack Robinson, Fatih Camgoz, Jong-In Yoon
+Date: November 7th
+Description: contains the routes for user profiles, login, register. used bCryptPasswordEncoder to encrypt all passwords
+ */
 package ca.gbc.comp3095.comp3095_assignment.user;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,7 +33,7 @@ public class UserController {
 
         if (logout != null) {
             model.addAttribute("message", "You have been logged out successfully.");
-            return "forward:/login?logout";
+            return "user/login";
         }
 
         return "user/login";

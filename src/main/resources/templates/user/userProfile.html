@@ -13,10 +13,12 @@
         <h1 class="text-center">Recipes</h1>
         <br>
         <div th:each="recipe : ${user.getRecipes()}">
+            <a th:href="@{'recipes/' + ${recipe.id}}">
             <div class="border border-primary">
                 <h5 class="text-center" th:text="${recipe.title}"></h5>
                 <p class="text-center" th:text="${recipe.description}"></p>
             </div>
+            </a>
             <br>
         </div>
         <hr>
@@ -24,21 +26,29 @@
         <h1 class="text-center">Favourites</h1>
         <br>
         <div th:each="favourite : ${user.getFavourites()}">
+            <a th:href="@{'recipes/' + ${favourite.recipe.id}}">
             <div class="border border-primary">
-                <p class="text-center" th:text="${favourite.recipe.title}"></p>
+                <h5 class="text-center" th:text="${favourite.recipe.title}"></h5>
             </div>
+            </a>
             <br>
         </div>
         <hr>
         <br>
         <h1 class="text-center">Meal Plan</h1>
         <br>
+
         <div th:each="plan : ${user.getMealPlans()}">
             <div class="border border-primary">
-                <p class="text-center" th:text="${plan.recipe.title}"></p>
+                <a th:href="@{'recipes/' + ${plan.recipe.id}}">
+                <h5 class="text-center" th:text="${plan.recipe.title}"></h5>
                 <p class="text-center" th:text="${plan.date}"></p>
+                </a>
             </div>
+            <br>
         </div>
+
+
     </div>
 </body>
 </html>

@@ -1,3 +1,10 @@
+/*
+Project: Recipe Site
+Assignment: 1
+Author: Jack Robinson, Fatih Camgoz, Jong-In Yoon
+Date: November 7th
+Description: configures which routes uses can access and which pages are used to login,  and default pages
+ */
 package ca.gbc.comp3095.comp3095_assignment.system;
 
 import org.springframework.beans.factory.annotation.Autowired;

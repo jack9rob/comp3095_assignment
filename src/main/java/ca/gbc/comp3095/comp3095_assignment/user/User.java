@@ -1,3 +1,10 @@
+/*
+Project: Recipe Site
+Assignment: 1
+Author: Jack Robinson, Fatih Camgoz, Jong-In Yoon
+Date: November 7th
+Description: user class for the app. contains password username, and the sets for the users recipes, favourite recipes, and meal plans
+ */
 package ca.gbc.comp3095.comp3095_assignment.user;
 
 import ca.gbc.comp3095.comp3095_assignment.mealPlan.MealPlan;

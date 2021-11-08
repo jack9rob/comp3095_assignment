@@ -14,18 +14,15 @@
                 <a class="nav-link" th:href="@{/profile}">Profile</a>
             </li>
         </ul>
-        <form class="d-flex mr-2">
-            <input class="form-control" type="search" placeholder="Search">
+        <form class="d-flex mr-2" th:action="@{/recipes}">
+            <input class="form-control" name="search" type="search" placeholder="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
     </div>
     <div>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item pl-2 ml-4">
-                <a class="nav-link text-success" href="userProfile.html">Login</a>
-            </li>
-            <li class="nav-item pl-2 ml-4">
-                <a class="nav-link text-danger" href="userProfile.html">Logout</a>
+                <a class="nav-link text-danger" th:href="@{/logout}">Logout</a>
             </li>
         </ul>
     </div>

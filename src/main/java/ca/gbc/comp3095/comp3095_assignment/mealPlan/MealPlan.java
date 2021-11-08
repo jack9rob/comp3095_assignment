@@ -1,3 +1,11 @@
+/*
+Project: Recipe Site
+Assignment: 1
+Author: Jack Robinson, Fatih Camgoz, Jong-In Yoon
+Date: November 7th
+Description: Model/class for meal plan for users to plan meal
+ */
+
 package ca.gbc.comp3095.comp3095_assignment.mealPlan;
 
 import ca.gbc.comp3095.comp3095_assignment.model.BaseEntity;

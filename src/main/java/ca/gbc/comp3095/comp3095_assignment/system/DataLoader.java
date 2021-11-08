@@ -1,3 +1,10 @@
+/*
+Project: Recipe Site
+Assignment: 1
+Author: Jack Robinson, Fatih Camgoz, Jong-In Yoon
+Date: November 7th
+Description: Loads dummy data to the database on startup. Data is cleared each time the app is closed
+ */
 package ca.gbc.comp3095.comp3095_assignment.system;
 
 import ca.gbc.comp3095.comp3095_assignment.mealPlan.MealPlan;
@@ -56,7 +63,7 @@ public class DataLoader implements ApplicationRunner {
         Recipe recipe1 = new Recipe();
         recipe1.setTitle("Title2");
         recipe1.setDescription("My Second Recipe");
-        recipe1.setUser(user);
+        recipe1.setUser(user1);
         recipes.save(recipe1);
 
         // meal plans

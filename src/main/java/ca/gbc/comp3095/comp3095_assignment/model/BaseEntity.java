@@ -1,3 +1,11 @@
+/*
+Project: Recipe Site
+Assignment: 1
+Author: Jack Robinson, Fatih Camgoz, Jong-In Yoon
+Date: November 7th
+Description: Base entity for all models in the project, only contains id
+ */
+
 package ca.gbc.comp3095.comp3095_assignment.model;
 
 import javax.persistence.GeneratedValue;

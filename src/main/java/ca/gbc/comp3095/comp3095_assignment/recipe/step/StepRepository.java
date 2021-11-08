@@ -1,3 +1,10 @@
+/*
+Project: Recipe Site
+Assignment: 1
+Author: Jack Robinson, Fatih Camgoz, Jong-In Yoon
+Date: November 7th
+Description: repo to select each step in order by step number, and save a step to a recipe
+ */
 package ca.gbc.comp3095.comp3095_assignment.recipe.step;
 
 import ca.gbc.comp3095.comp3095_assignment.recipe.Recipe;

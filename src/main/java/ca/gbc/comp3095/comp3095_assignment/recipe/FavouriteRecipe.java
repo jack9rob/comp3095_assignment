@@ -1,3 +1,10 @@
+/*
+Project: Recipe Site
+Assignment: 1
+Author: Jack Robinson, Fatih Camgoz, Jong-In Yoon
+Date: November 7th
+Description: model for favourite recipes, users can save recipes which they have not yet favourite or they didn't create
+ */
 package ca.gbc.comp3095.comp3095_assignment.recipe;
 
 import ca.gbc.comp3095.comp3095_assignment.model.BaseEntity;

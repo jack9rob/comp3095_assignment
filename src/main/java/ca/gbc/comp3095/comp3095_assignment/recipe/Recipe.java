@@ -1,3 +1,10 @@
+/*
+Project: Recipe Site
+Assignment: 1
+Author: Jack Robinson, Fatih Camgoz, Jong-In Yoon
+Date: November 7th
+Description: The recipe class, each recipe has an owner, many steps and ingredients. A recipe can be favourited or planned for the future
+ */
 package ca.gbc.comp3095.comp3095_assignment.recipe;
 
 import ca.gbc.comp3095.comp3095_assignment.mealPlan.MealPlan;
