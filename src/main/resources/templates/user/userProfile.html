@@ -11,18 +11,26 @@
         <hr>
         <br>
         <h1 class="text-center">Recipes</h1>
+        <br>
         <div th:each="recipe : ${user.getRecipes()}">
-            <p th:text="${recipe.title}"></p>
+            <div class="border border-primary">
+                <h5 class="text-center" th:text="${recipe.title}"></h5>
+                <p class="text-center" th:text="${recipe.description}"></p>
+            </div>
+            <br>
         </div>
         <hr>
         <br>
         <h1 class="text-center">Favourites</h1>
+        <br>
         <div th:each="favourite : ${user.getFavourites()}">
-            <p th:text="${favourite.recipe.title}"></p>
+            <p class="text-center text-warning" th:text="${favourite.recipe.title}"></p>
+            <br>
         </div>
         <hr>
         <br>
         <h1 class="text-center">Meal Plan</h1>
+        <br>
         <div th:each="plan : ${user.getMealPlans()}">
             <p th:text="${plan.recipe.title}"></p>
             <p th:text="${plan.date}"></p>
