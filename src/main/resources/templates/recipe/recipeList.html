@@ -8,13 +8,26 @@
 <div th:replace="common/navbar :: common-navbar"></div>
 <div class="container d-flex flex-column justify-content-center">
     <h1 class="text-center">Recipes</h1>
-    <hr>
     <br>
-    <h3 class="text-center" th:inline="text">Here is your recipes [[${#httpServletRequest.remoteUser}]]!</h3>
-
+    <a class="btn btn-primary btn-sm" th:href="@{recipes/new}">ADD A NEW RECIPE</a>
+    <hr>
     <div th:each="recipe : ${recipes}">
         <h3 th:text="${recipe.title}"></h3>
-        <h5 th:text="${recipe.description}"></h5>
+        <div class="d-flex">
+            <h5>Description: </h5>
+            <h5 th:text=" ${recipe.description}"></h5>
+        </div>
+        <div class="d-flex">
+            <h5>Ingredients: </h5>
+            <h5 th:text=" ${recipe.ingredients}"></h5>
+        </div>
+        <div class="d-flex">
+            <h6>Created by: </h6>
+            <h6 th:text=" ${recipe.user}"></h6>
+        </div>
+        <a class="btn btn-primary">See the details</a>
+        <a class="btn btn-warning" >Add to favourites</a>
+        <a class="btn btn-success" >Add to Meal Plan</a>
         <hr>
         <br>
     </div>
