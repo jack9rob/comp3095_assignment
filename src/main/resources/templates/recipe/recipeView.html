@@ -27,6 +27,11 @@
 
     <h4>Ingredients</h4>
     <div th:each="ingr: ${recipe.ingredients}">
+        <!-- check to see if ingredient is already in shopping list -->
+        <div th:switch="${list.getIngredients().contains(ingr)}">
+            <a th:case='${false}' th:href="@{'/shoppinglist/' + ${recipe.getId()} + '/'+ ${ingr.getId()}}">Add</a>
+            <p th:case="*">Already in shopping list</p>
+        </div>
         <p th:text="${ingr.name + ' - ' + ingr.amount}"></p>
     </div>
 

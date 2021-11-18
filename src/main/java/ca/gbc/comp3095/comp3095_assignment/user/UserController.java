@@ -7,6 +7,8 @@ Description: contains the routes for user profiles, login, register. used bCrypt
  */
 package ca.gbc.comp3095.comp3095_assignment.user;
 
+import ca.gbc.comp3095.comp3095_assignment.services.ShoppingListService;
+import ca.gbc.comp3095.comp3095_assignment.shoppinglist.ShoppingList;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +21,12 @@ import java.security.Principal;
 public class UserController {
 
     private final UserRepository users;
+    private final ShoppingListService shoppingListService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserController(UserRepository users, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserController(UserRepository users, ShoppingListService shoppingListService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.users = users;
+        this.shoppingListService = shoppingListService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -64,7 +68,15 @@ public class UserController {
     @GetMapping("profile")
     public String profile(Model model, Principal principal) {
         User user = users.findByUsername(principal.getName());
+        ShoppingList list = shoppingListService.findByUser(principal.getName());
+        if(list == null) {
+            ShoppingList newList = new ShoppingList();
+            newList.setUser(user);
+            shoppingListService.save(newList);
+            list = shoppingListService.findByUser(principal.getName());
+        }
         model.addAttribute("user", user);
+        model.addAttribute("list", list);
         return "user/userProfile";
     }
 }
