@@ -13,6 +13,8 @@ import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.Ingredient;
 import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.IngredientRepository;
 import ca.gbc.comp3095.comp3095_assignment.recipe.step.Step;
 import ca.gbc.comp3095.comp3095_assignment.recipe.step.StepRepository;
+import ca.gbc.comp3095.comp3095_assignment.services.ShoppingListService;
+import ca.gbc.comp3095.comp3095_assignment.shoppinglist.ShoppingList;
 import ca.gbc.comp3095.comp3095_assignment.user.User;
 import ca.gbc.comp3095.comp3095_assignment.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -38,18 +39,20 @@ public class RecipeController {
     private final UserRepository users;
     private final FavouriteRecipeRepository favourites;
     private final MealPlanRepository mealPlans;
+    private final ShoppingListService shoppingLists;
 
     @Autowired
-    public RecipeController(RecipeRepository recipes, StepRepository steps, IngredientRepository ingredients, UserRepository users, FavouriteRecipeRepository favourites, MealPlanRepository mealPlans) {
+    public RecipeController(RecipeRepository recipes, StepRepository steps, IngredientRepository ingredients, UserRepository users, FavouriteRecipeRepository favourites, MealPlanRepository mealPlans, ShoppingListService shoppingLists) {
         this.recipes = recipes;
         this.steps = steps;
         this.ingredients = ingredients;
         this.users = users;
         this.favourites = favourites;
         this.mealPlans = mealPlans;
+        this.shoppingLists = shoppingLists;
     }
 
-    @RequestMapping("/recipes")
+    @RequestMapping({"/recipes", "/"})
     public String findAll(Model model, String search) {
         if(search != null) {
             model.addAttribute("recipes", this.recipes.searchByTitle(search));
@@ -82,6 +85,7 @@ public class RecipeController {
     @RequestMapping("/recipes/{recipeId}")
     public String viewRecipe(@PathVariable("recipeId") Long recipeId, Model model, Principal principal) {
         Recipe recipe = this.recipes.findById(recipeId);
+        ShoppingList list = this.shoppingLists.findByUser(principal.getName());
         Boolean isOwner = false;
         if(principal.getName().equals(recipe.getUser().getUsername())) {
             isOwner = true;
@@ -91,6 +95,7 @@ public class RecipeController {
         model.addAttribute("ingredient", new Ingredient());
         model.addAttribute("steps", this.steps.getStepOrderStepNumber(recipeId));
         model.addAttribute("isOwner", isOwner);
+        model.addAttribute("list", list);
         return "recipe/recipeView";
     }
 

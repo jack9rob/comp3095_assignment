@@ -11,8 +11,12 @@ import ca.gbc.comp3095.comp3095_assignment.mealPlan.MealPlan;
 import ca.gbc.comp3095.comp3095_assignment.mealPlan.MealPlanRepository;
 import ca.gbc.comp3095.comp3095_assignment.recipe.Recipe;
 import ca.gbc.comp3095.comp3095_assignment.recipe.RecipeRepository;
+import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.Ingredient;
+import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.IngredientRepository;
 import ca.gbc.comp3095.comp3095_assignment.recipe.step.Step;
 import ca.gbc.comp3095.comp3095_assignment.recipe.step.StepRepository;
+import ca.gbc.comp3095.comp3095_assignment.services.ShoppingListService;
+import ca.gbc.comp3095.comp3095_assignment.shoppinglist.ShoppingList;
 import ca.gbc.comp3095.comp3095_assignment.user.User;
 import ca.gbc.comp3095.comp3095_assignment.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +34,18 @@ public class DataLoader implements ApplicationRunner {
     private final MealPlanRepository mealPlans;
     private final StepRepository steps;
     private final UserRepository userRepository;
+    private final ShoppingListService shoppingRepository;
+    private final IngredientRepository ingredientRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public DataLoader(RecipeRepository recipes, MealPlanRepository mealPlans, StepRepository steps, UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public DataLoader(RecipeRepository recipes, MealPlanRepository mealPlans, StepRepository steps, UserRepository userRepository, ShoppingListService shoppingRepository, IngredientRepository ingredientRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.recipes = recipes;
         this.mealPlans = mealPlans;
         this.steps = steps;
         this.userRepository = userRepository;
+        this.shoppingRepository = shoppingRepository;
+        this.ingredientRepository = ingredientRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -86,5 +94,13 @@ public class DataLoader implements ApplicationRunner {
         step.setStepNumber(1);
         steps.save(step);
 
+        // shopping list
+        Ingredient ing1 = new Ingredient();
+        ing1.setAmount("Test");
+        ing1.setName("TEst");
+        ShoppingList list = new ShoppingList();
+        list.setUser(user);
+        list.getIngredients().add(ing1);
+        shoppingRepository.save(list);
     }
 }

@@ -48,6 +48,24 @@
             <br>
         </div>
 
+        <br>
+
+        <h1>Shopping List</h1>
+
+        <br>
+        <div th:if="${list != null}">
+            <div th:each="ingr : ${list.getIngredients()}">
+                <div class="border border-primary">
+                    <p th:text="${ingr.name + ' - ' + ingr.amount}"></p>
+                    <form th:action="@{/shoppinglist/delete}" method="POST">
+                        <input type="hidden" th:value="${ingr.getId()}" th:name="ingredientId">
+                        <button typ="submit">Delete</button>
+                    </form>
+                </div>
+                <br>
+            </div>
+        </div>
+
 
     </div>
 </body>
