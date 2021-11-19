@@ -8,12 +8,9 @@ Description: main controller, used to create recipes, ingredients, steps, meal p
 package ca.gbc.comp3095.comp3095_assignment.recipe;
 
 import ca.gbc.comp3095.comp3095_assignment.mealPlan.MealPlan;
-import ca.gbc.comp3095.comp3095_assignment.mealPlan.MealPlanRepository;
 import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.Ingredient;
-import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.IngredientRepository;
 import ca.gbc.comp3095.comp3095_assignment.recipe.step.Step;
-import ca.gbc.comp3095.comp3095_assignment.recipe.step.StepRepository;
-import ca.gbc.comp3095.comp3095_assignment.services.ShoppingListService;
+import ca.gbc.comp3095.comp3095_assignment.services.*;
 import ca.gbc.comp3095.comp3095_assignment.shoppinglist.ShoppingList;
 import ca.gbc.comp3095.comp3095_assignment.user.User;
 import ca.gbc.comp3095.comp3095_assignment.user.UserRepository;
@@ -28,21 +25,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class RecipeController {
 
 
-    private final RecipeRepository recipes;
-    private final StepRepository steps;
-    private final IngredientRepository ingredients;
+    private final RecipeService recipes;
+    private final StepService steps;
+    private final IngredientService ingredients;
     private final UserRepository users;
-    private final FavouriteRecipeRepository favourites;
-    private final MealPlanRepository mealPlans;
+    private final FavouriteRecipeService favourites;
+    private final MealPlanService mealPlans;
     private final ShoppingListService shoppingLists;
 
     @Autowired
-    public RecipeController(RecipeRepository recipes, StepRepository steps, IngredientRepository ingredients, UserRepository users, FavouriteRecipeRepository favourites, MealPlanRepository mealPlans, ShoppingListService shoppingLists) {
+    public RecipeController(RecipeService recipes, StepService steps, IngredientService ingredients, UserRepository users, FavouriteRecipeService favourites, MealPlanService mealPlans, ShoppingListService shoppingLists) {
         this.recipes = recipes;
         this.steps = steps;
         this.ingredients = ingredients;
@@ -55,9 +53,9 @@ public class RecipeController {
     @RequestMapping({"/recipes", "/"})
     public String findAll(Model model, String search) {
         if(search != null) {
-            model.addAttribute("recipes", this.recipes.searchByTitle(search));
+            model.addAttribute("recipes", this.recipes.findByTitleIgnoreCase(search));
         } else {
-            model.addAttribute("recipes", this.recipes.getAll());
+            model.addAttribute("recipes", this.recipes.findAll());
         }
         return "recipe/recipeList";
     }
@@ -93,7 +91,7 @@ public class RecipeController {
         model.addAttribute("recipe", recipe);
         model.addAttribute("step", new Step());
         model.addAttribute("ingredient", new Ingredient());
-        model.addAttribute("steps", this.steps.getStepOrderStepNumber(recipeId));
+        model.addAttribute("steps", this.steps.findByRecipeIdOrderByStepNumber(recipeId));
         model.addAttribute("isOwner", isOwner);
         model.addAttribute("list", list);
         return "recipe/recipeView";
@@ -103,7 +101,7 @@ public class RecipeController {
     @PostMapping("/recipes/new/step")
     public String processAddStep(Long recipeId, Step step, BindingResult result) {
         Recipe recipe = this.recipes.findById(recipeId);
-        List<Step> steps = this.steps.getStepOrderStepNumber(recipeId);
+        List<Step> steps = this.steps.findByRecipeIdOrderByStepNumber(recipeId);
         if(steps.size() != 0) {
             int stepNumber = steps.get(steps.size() - 1).getStepNumber();
             step.setStepNumber(stepNumber + 1);
