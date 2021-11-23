@@ -8,6 +8,7 @@ Description: class logins verifies and logins in users from the database
 
 package ca.gbc.comp3095.comp3095_assignment.user;
 
+import ca.gbc.comp3095.comp3095_assignment.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +25,7 @@ import java.util.Set;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userRepository;
 
     @Override
     @Transactional(readOnly = true)

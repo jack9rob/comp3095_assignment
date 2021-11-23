@@ -13,7 +13,6 @@ import ca.gbc.comp3095.comp3095_assignment.recipe.step.Step;
 import ca.gbc.comp3095.comp3095_assignment.services.*;
 import ca.gbc.comp3095.comp3095_assignment.shoppinglist.ShoppingList;
 import ca.gbc.comp3095.comp3095_assignment.user.User;
-import ca.gbc.comp3095.comp3095_assignment.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class RecipeController {
@@ -34,13 +32,13 @@ public class RecipeController {
     private final RecipeService recipes;
     private final StepService steps;
     private final IngredientService ingredients;
-    private final UserRepository users;
+    private final UserService users;
     private final FavouriteRecipeService favourites;
     private final MealPlanService mealPlans;
     private final ShoppingListService shoppingLists;
 
     @Autowired
-    public RecipeController(RecipeService recipes, StepService steps, IngredientService ingredients, UserRepository users, FavouriteRecipeService favourites, MealPlanService mealPlans, ShoppingListService shoppingLists) {
+    public RecipeController(RecipeService recipes, StepService steps, IngredientService ingredients, UserService users, FavouriteRecipeService favourites, MealPlanService mealPlans, ShoppingListService shoppingLists) {
         this.recipes = recipes;
         this.steps = steps;
         this.ingredients = ingredients;

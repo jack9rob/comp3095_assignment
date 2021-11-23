@@ -14,7 +14,6 @@ import ca.gbc.comp3095.comp3095_assignment.recipe.step.Step;
 import ca.gbc.comp3095.comp3095_assignment.services.*;
 import ca.gbc.comp3095.comp3095_assignment.shoppinglist.ShoppingList;
 import ca.gbc.comp3095.comp3095_assignment.user.User;
-import ca.gbc.comp3095.comp3095_assignment.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -29,13 +28,13 @@ public class DataLoader implements ApplicationRunner {
     private final RecipeService recipes;
     private final MealPlanService mealPlans;
     private final StepService steps;
-    private final UserRepository userRepository;
+    private final UserService userRepository;
     private final ShoppingListService shoppingRepository;
     private final IngredientService ingredientRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public DataLoader(RecipeService recipes, MealPlanService mealPlans, StepService steps, UserRepository userRepository, ShoppingListService shoppingRepository, IngredientService ingredientRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public DataLoader(RecipeService recipes, MealPlanService mealPlans, StepService steps, UserService userRepository, ShoppingListService shoppingRepository, IngredientService ingredientRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.recipes = recipes;
         this.mealPlans = mealPlans;
         this.steps = steps;
