@@ -1,7 +1,7 @@
 package ca.gbc.comp3095.comp3095_assignment.services.springdatajpa;
 
 import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.Ingredient;
-import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.IngredientRepository;
+import ca.gbc.comp3095.comp3095_assignment.services.IngredientService;
 import ca.gbc.comp3095.comp3095_assignment.services.ShoppingListService;
 import ca.gbc.comp3095.comp3095_assignment.shoppinglist.ShoppingList;
 import ca.gbc.comp3095.comp3095_assignment.services.repositories.ShoppingListRepository;
@@ -16,9 +16,9 @@ public class ShoppingListSDJpaService implements ShoppingListService {
 
     private final ShoppingListRepository shoppingListRepository;
     private final UserRepository userRepository;
-    private final IngredientRepository ingredientRepository;
+    private final IngredientService ingredientRepository;
 
-    public ShoppingListSDJpaService(ShoppingListRepository shoppingListRepository, UserRepository userRepository, IngredientRepository ingredientRepository) {
+    public ShoppingListSDJpaService(ShoppingListRepository shoppingListRepository, UserRepository userRepository, IngredientService ingredientRepository) {
         this.shoppingListRepository = shoppingListRepository;
         this.userRepository = userRepository;
         this.ingredientRepository = ingredientRepository;

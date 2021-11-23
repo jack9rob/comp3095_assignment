@@ -7,22 +7,20 @@ Description: Used to create a new ingredient for a recipe
  */
 package ca.gbc.comp3095.comp3095_assignment.recipe.ingredient;
 
-import ca.gbc.comp3095.comp3095_assignment.recipe.Recipe;
-import ca.gbc.comp3095.comp3095_assignment.recipe.RecipeRepository;
-import ca.gbc.comp3095.comp3095_assignment.recipe.step.Step;
+import ca.gbc.comp3095.comp3095_assignment.services.IngredientService;
+import ca.gbc.comp3095.comp3095_assignment.services.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class IngredientController {
 
-    private final IngredientRepository ingredients;
+    private final IngredientService ingredients;
 
-    private final RecipeRepository recipes;
+    private final RecipeService recipes;
 
-    public IngredientController(IngredientRepository ingredients, RecipeRepository recipes) {
+    public IngredientController(IngredientService ingredients, RecipeService recipes) {
         this.ingredients = ingredients;
         this.recipes = recipes;
     }

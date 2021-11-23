@@ -11,6 +11,7 @@ import ca.gbc.comp3095.comp3095_assignment.mealPlan.MealPlan;
 import ca.gbc.comp3095.comp3095_assignment.model.BaseEntity;
 import ca.gbc.comp3095.comp3095_assignment.recipe.FavouriteRecipe;
 import ca.gbc.comp3095.comp3095_assignment.recipe.Recipe;
+import ca.gbc.comp3095.comp3095_assignment.shoppinglist.ShoppingList;
 
 import javax.persistence.*;
 import java.util.HashSet;
