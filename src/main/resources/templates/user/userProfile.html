@@ -6,18 +6,39 @@
 </head>
 <body>
 <div th:replace="common/navbar :: common-navbar"></div>
-    <div class="container d-flex flex-column justify-content-center">
-        <h1 th:text="${user.username}"></h1>
-        <hr>
-        <br>
+<div class="row justify-content-center">
+    <div class="col-md-3">
+        <h1 class="text-center m-4">Profile</h1>
+        <div class="row">
+            <div class="col-4">
+                <img alt="profile-picture" src="static/profile-pic.png"/>
+            </div>
+            <div class="col-8 d-flex justify-content-around">
+                <div>
+                    <h5>First Name: </h5>
+                    <h5>Last Name: </h5>
+                </div>
+                <div>
+                    <h5>Fatih</h5>
+                    <h5>Camgoz</h5>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h5>Bio</h5>
+            <div class="text-break">blabfdsbdsbsdfbfdbsdbfdbssdbfdsbdbfdbsdbsdbfdsbfdsbfsdbdfbfdbfdbgfdgdgdsgdsgdsgdgsgd</div>
+        </div>
+        <button class="btn btn-sm btn-primary mt-4">Edit Profile</button>
+    </div>
+    <div class="col-md-7">
         <h1 class="text-center">Recipes</h1>
         <br>
         <div th:each="recipe : ${user.getRecipes()}">
-            <a th:href="@{'recipes/' + ${recipe.id}}">
-            <div class="border border-primary">
-                <h5 class="text-center" th:text="${recipe.title}"></h5>
-                <p class="text-center" th:text="${recipe.description}"></p>
-            </div>
+            <a class="text-decoration-none" th:href="@{'recipes/' + ${recipe.id}}">
+                <div class="border border-primary p-2">
+                    <h5 class="text-center text-uppercase" th:text="${recipe.title}"></h5>
+                    <p class="text-center" th:text="${recipe.description}"></p>
+                </div>
             </a>
             <br>
         </div>
@@ -25,48 +46,33 @@
         <br>
         <h1 class="text-center">Favourites</h1>
         <br>
-        <div th:each="favourite : ${user.getFavourites()}">
-            <a th:href="@{'recipes/' + ${favourite.recipe.id}}">
-            <div class="border border-primary">
-                <h5 class="text-center" th:text="${favourite.recipe.title}"></h5>
+        <div th:if="${user.getFavourites().size() > 0}">
+            <div th:each="favourite : ${user.getFavourites()}">
+                <a class="text-decoration-none" th:href="@{'recipes/' + ${favourite.recipe.id}}">
+                    <div class="border border-primary p-2">
+                        <h5 class="text-center text-uppercase" th:text="${favourite.recipe.title}"></h5>
+                    </div>
+                </a>
+                <br>
             </div>
-            </a>
-            <br>
+        </div>
+        <div th:unless="${user.getFavourites().size()}">
+            <h5 class="text-center">No favourites recipes added yet!</h5>
         </div>
         <hr>
         <br>
         <h1 class="text-center">Meal Plan</h1>
         <br>
-
         <div th:each="plan : ${user.getMealPlans()}">
-            <div class="border border-primary">
-                <a th:href="@{'recipes/' + ${plan.recipe.id}}">
-                <h5 class="text-center" th:text="${plan.recipe.title}"></h5>
-                <p class="text-center" th:text="${plan.date}"></p>
+            <div class="border border-primary p-2">
+                <a class="text-decoration-none" th:href="@{'recipes/' + ${plan.recipe.id}}">
+                    <h5 class="text-center text-uppercase" th:text="${plan.recipe.title}"></h5>
+                    <p class="text-center" th:text="${plan.date}"></p>
                 </a>
             </div>
             <br>
         </div>
-
-        <br>
-
-        <h1>Shopping List</h1>
-
-        <br>
-        <div th:if="${list != null}">
-            <div th:each="ingr : ${list.getIngredients()}">
-                <div class="border border-primary">
-                    <p th:text="${ingr.name + ' - ' + ingr.amount}"></p>
-                    <form th:action="@{/shoppinglist/delete}" method="POST">
-                        <input type="hidden" th:value="${ingr.getId()}" th:name="ingredientId">
-                        <button typ="submit">Delete</button>
-                    </form>
-                </div>
-                <br>
-            </div>
-        </div>
-
-
     </div>
+</div>
 </body>
 </html>
