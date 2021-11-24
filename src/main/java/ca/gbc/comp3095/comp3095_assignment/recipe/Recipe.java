@@ -15,6 +15,7 @@ import ca.gbc.comp3095.comp3095_assignment.user.User;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,6 +29,9 @@ public class Recipe extends BaseEntity {
 
     @Column
     private String title;
+
+    @Column
+    private Date dateCreated;
 
     @Column
     private String description;
@@ -98,5 +102,13 @@ public class Recipe extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 }

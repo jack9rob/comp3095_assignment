@@ -6,6 +6,7 @@ import ca.gbc.comp3095.comp3095_assignment.services.RecipeService;
 import ca.gbc.comp3095.comp3095_assignment.services.repositories.RecipeRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,6 +32,7 @@ public class RecipeSDJpaService implements RecipeService {
 
     @Override
     public Recipe save(Recipe object) {
+        object.setDateCreated(new Date());
         return recipeRepository.save(object);
     }
 

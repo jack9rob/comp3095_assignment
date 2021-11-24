@@ -7,12 +7,17 @@
 <body>
 <div th:replace="common/navbar :: common-navbar"></div>
 <div class="container d-flex flex-column justify-content-center">
-    <div>
-        <h1 th:text="${recipe.getTitle()}"></h1>
-        <hr>
+    <div class="container">
+        <h1 class="row" th:text="${recipe.getTitle()}"></h1>
+        <div class="row">
+            <small class="text-muted col-2" th:text="'created by: '+ ${recipe.user.getUsername}"></small>
+            <small class="text-muted col-3" th:text="'published: ' + ${#dates.format(recipe.dateCreated, 'dd/MM/yyy')}"></small>
+        </div>
         <br>
-        <div>
-            <h5 th:text="${recipe.description}"></h5>
+        <div class="row mt-2"><hr></div>
+        <br>
+        <div class="row">
+            <h5 class="col-10" th:text="${recipe.description}"></h5>
         </div>
     </div>
 
@@ -20,23 +25,37 @@
     <br>
 
     <!-- Step Display -->
+    <div class="row">
     <h4>Steps</h4>
-    <div th:each="step: ${steps}">
-        <p th:text="${step.stepNumber + '. ' + step.stepDescription}"></p>
+        <div th:if="${steps.size() > 0}">
+            <div class="row" th:each="step: ${steps}">
+                <p class="col-2" th:text="${step.stepNumber + '. ' + step.stepDescription}"></p>
+            </div>
+        </div>
+        <div th:unless="${steps.size() > 0}">
+            <p>Sorry no steps</p>
+        </div>
+
     </div>
 
     <h4>Ingredients</h4>
-    <div th:each="ingr: ${recipe.ingredients}">
-        <!-- check to see if ingredient is already in shopping list -->
-        <div th:switch="${list.getIngredients().contains(ingr)}">
-            <a th:case='${false}' th:href="@{'/shoppinglist/' + ${recipe.getId()} + '/'+ ${ingr.getId()}}">Add</a>
-            <p th:case="*">Already in shopping list</p>
+    <div th:if="${recipe.ingredients.size() > 0}">
+        <div th:each="ingr: ${recipe.ingredients}">
+            <!-- check to see if ingredient is already in shopping list -->
+            <div th:switch="${list.getIngredients().contains(ingr)}">
+                <a th:case='${false}' th:href="@{'/shoppinglist/' + ${recipe.getId()} + '/'+ ${ingr.getId()}}"><small>Add</small></a>
+                <small class="text-muted" th:case="*">Already in shopping list</small>
+            </div>
+            <p th:text="${ingr.name + ' - ' + ingr.amount}"></p>
         </div>
-        <p th:text="${ingr.name + ' - ' + ingr.amount}"></p>
+    </div>
+    <div th:unless="${recipe.ingredients.size() > 0}">
+        <p>Sorry no ingredients</p>
     </div>
 
 
-    <div th:if="${isOwner}">
+
+    <div th:if="${isOwner}" class="col-10">
         <!-- Step Creation -->
         <h4 class="text-center">Add a new Step</h4>
         <div class="d-flex justify-content-center">
