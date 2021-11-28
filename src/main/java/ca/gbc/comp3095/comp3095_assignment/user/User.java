@@ -25,10 +25,19 @@ public class User extends BaseEntity {
     private String username;
     @Column
     private String password;
+    @Column
+    private String email;
+    @Column
+    private String firstName;
+    @Column
+    private String lastName;
+    @Column
+    private String image;
+    @Column
+    private String bio;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Recipe> recipes = new HashSet<>();
-
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<MealPlan> mealPlans = new HashSet<>();
@@ -74,5 +83,45 @@ public class User extends BaseEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }
