@@ -50,7 +50,8 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerProcess(String username, String password, String confirmPassword, Model model) {
+    public String registerProcess(String username, String password, String confirmPassword, String email,
+                                  String firstName, String lastName, String image, Model model) {
         if(users.findByUsername(username) != null) {
             model.addAttribute("error", username + " is already taken");
             return "user/userRegistration";
@@ -61,6 +62,10 @@ public class UserController {
         User newUser = new User();
         newUser.setUsername(username);
         newUser.setPassword(bCryptPasswordEncoder.encode(password));
+        newUser.setEmail(email);
+        newUser.setFirstName(firstName);
+        newUser.setLastName(lastName);
+        newUser.setImage(image);
 
         users.save(newUser);
         return "redirect:/login";

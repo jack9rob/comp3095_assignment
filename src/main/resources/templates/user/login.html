@@ -8,11 +8,11 @@
 <body>
 <div th:replace="common/navbar :: common-navbar"></div>
   <div class="mt-5">
-    <div th:if="${param.error}">
-      Invalid username and password.
+    <div class="text-center text-danger mb-2" th:if="${param.error}">
+      Invalid username and/or password.
     </div>
-    <div th:if="${param.logout}">
-      You have been logged out.
+    <div class="text-center text-success mb-2" th:if="${param.logout}">
+      You have been successfully logged out.
     </div>
     <div class="container">
       <h1 class="text-center mb-4">Login</h1>
@@ -31,9 +31,11 @@
       </div>
     </div>
   </div>
-
-  <p>For Sergio</p>
-  <p>Second user:</p>
-  <p>Username: jack password: password</p>
+  <br>
+  <div class="text-center text-success">
+    <p>For Sergio</p>
+    <p>Second user:</p>
+    <p>Username: jack password: password</p>
+  </div>
 </body>
 </html>
