@@ -13,7 +13,9 @@
             <small class="text-muted col-2" th:text="'created by: '+ ${recipe.user.getUsername}"></small>
             <small class="text-muted col-3" th:text="'published: ' + ${#dates.format(recipe.dateCreated, 'dd/MM/yyy')}"></small>
         </div>
-        <br>
+        <div th:if="${isOwner}">
+            <a th:href="@{${recipeId} + '/edit'}">Edit</a>
+        </div>
         <div class="row mt-2"><hr></div>
         <br>
         <div class="row">
@@ -53,38 +55,6 @@
         <p>Sorry no ingredients</p>
     </div>
 
-
-
-    <div th:if="${isOwner}" class="col-10">
-        <!-- Step Creation -->
-        <h4 class="text-center">Add a new Step</h4>
-        <div class="d-flex justify-content-center">
-            <div>
-                <form th:object="${step}" th:action="@{/recipes/new/step}" method="post">
-                    <div class="form-group"><label> Step description: <input class="form-control input-lg" type="text" th:field="*{stepDescription}"/> </label></div>
-                    <br>
-                    <div class="form-group"><input class="form-control input-lg" name="recipeId" type="hidden" th:value="${recipe.getId()}"/></div>
-                    <div class="form-group"><input class="btn btn-primary mt-2" type="submit" value="Add Step"/></div>
-                </form>
-            </div>
-        </div>
-
-
-        <br>
-        <!-- Ingredient Creation -->
-
-        <h4 class="text-center">Add a new Ingredient</h4>
-        <div class="d-flex justify-content-center">
-            <div>
-                <form th:object="${ingredient}" th:action="@{/ingredient/new}" method="post">
-                    <div class="form-group"><label> Ingredient Name: <input class="form-control" type="text" th:field="*{name}"/></label></div>
-                    <div class="form-group"><label> Ingredient Amount:  <input class="form-control" type="text" th:field="*{amount}"/></label></div>
-                    <input type="hidden" name="recipeId" th:value="${recipe.getId()}"/>
-                    <div class="form-group"><input class="btn btn-primary mt-2" type="submit" value="Add Ingredient"/></div>
-                </form>
-            </div>
-        </div>
-    </div>
 </div>
 </body>
 </html>

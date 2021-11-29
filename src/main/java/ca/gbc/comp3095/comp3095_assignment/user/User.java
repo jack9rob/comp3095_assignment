@@ -36,6 +36,10 @@ public class User extends BaseEntity {
     @Column
     private String bio;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private ShoppingList shoppingList;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Recipe> recipes = new HashSet<>();
 
@@ -124,4 +128,6 @@ public class User extends BaseEntity {
     public void setBio(String bio) {
         this.bio = bio;
     }
+
+
 }

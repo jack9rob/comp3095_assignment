@@ -95,6 +95,19 @@ public class RecipeController {
         return "recipe/recipeView";
     }
 
+    @RequestMapping("/recipes/{recipeId}/edit")
+    public String initEditRecipe(@PathVariable("recipeId") Long recipeId, Model model, Principal principal) {
+        Recipe recipe = this.recipes.findById(recipeId);
+        if(principal.getName().equals(recipe.getUser().getUsername())) {
+            model.addAttribute("recipe", recipe);
+            model.addAttribute("step", new Step());
+            model.addAttribute("ingredient", new Ingredient());
+            model.addAttribute("steps", this.steps.findByRecipeIdOrderByStepNumber(recipeId));
+            return "recipe/recipeEdit";
+        }
+        return String.format("redirect:/recipes/%d", recipeId);
+    }
+
     // move to other controller maybe
     @PostMapping("/recipes/new/step")
     public String processAddStep(Long recipeId, Step step, BindingResult result) {
@@ -111,7 +124,7 @@ public class RecipeController {
             step.setRecipe(this.recipes.findById(recipeId));
             this.steps.save(step);
         }
-        return String.format("redirect:/recipes/%d", recipeId);
+        return String.format("redirect:/recipes/%d/edit", recipeId);
     }
 
     @RequestMapping("favourite/{recipeId}")
