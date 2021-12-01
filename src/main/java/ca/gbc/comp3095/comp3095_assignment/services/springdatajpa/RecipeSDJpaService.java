@@ -50,4 +50,11 @@ public class RecipeSDJpaService implements RecipeService {
     public Recipe findByTitleIgnoreCase(String title) {
         return recipeRepository.findByTitleIgnoreCase(title);
     }
+
+    @Override
+    public Set<Recipe> findAllByOrderByDateCreated() {
+        Set<Recipe> recipes = new HashSet<>();
+        recipeRepository.findAllByOrderByDateCreatedDesc().forEach(recipes::add);
+        return recipes;
+    }
 }

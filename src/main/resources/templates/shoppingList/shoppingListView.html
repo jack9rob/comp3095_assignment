@@ -10,16 +10,21 @@
     <h1 class="text-center">My Shopping List</h1>
     <br>
     <hr>
-    <div th:each="ingredient : ${shoppingList.ingredients}">
-        <h3 th:text="${ingredient.name}"></h3>
-        <div class="d-flex">
-            <h5>Amount: </h5>
-            <h5 th:text=" ${ingredient.amount}"></h5>
-        </div>
-        <a th:href="@{'/shoppinglist/delete/' + ${ingredient.id}}" class="btn btn-primary">Remove</a>
+    <div th:if="${shoppingList.ingredients.size() != 0}">
+        <div th:each="ingredient : ${shoppingList.ingredients}">
+            <h3 th:text="${ingredient.name}"></h3>
+            <div class="d-flex">
+                <h5>Amount: </h5>
+                <h5 th:text=" ${ingredient.amount}"></h5>
+            </div>
+            <a th:href="@{'/shoppinglist/delete/' + ${ingredient.id}}" class="btn btn-primary">Remove</a>
 
-        <hr>
-        <br>
+            <hr>
+            <br>
+        </div>
+    </div>
+    <div th:unless="${shoppingList.ingredients.size() != 0}">
+        <h3 class="text-center">Add Ingredients You Need</h3>
     </div>
 </div>
 </body>

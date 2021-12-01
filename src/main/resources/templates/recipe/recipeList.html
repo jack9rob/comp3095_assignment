@@ -3,6 +3,17 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <title>Recipes</title>
+    <style>
+        .recipe:hover {
+            background-color: #F0F0F0;
+        }
+        .atag {
+            color: black
+        }
+        .atag:hover {
+            color: black
+        }
+    </style>
 </head>
 <body>
 <div th:replace="common/navbar :: common-navbar"></div>
@@ -12,19 +23,19 @@
     <a class="btn btn-primary btn-sm" th:href="@{recipes/new}">ADD A NEW RECIPE</a>
     <hr>
     <div th:each="recipe : ${recipes}">
-        <h3 th:text="${recipe.title}"></h3>
-        <div class="d-flex">
-            <h5>Description: </h5>
-            <h5 th:text=" ${recipe.description}"></h5>
-        </div>
-        <div class="d-flex">
-            <h6 th:text="'Created by: ' + ${recipe.user.username}"></h6>
-        </div>
-        <a th:href="@{'/recipes/' + ${recipe.id}}" class="btn btn-primary">See the details</a>
-        <a th:href="@{'/plan/' + ${recipe.id}}" class="btn btn-success" >Add to Meal Plan</a>
-        <a th:if="${!#strings.equals(recipe.user.username, username)}" th:href="@{'/favourite/' + ${recipe.id}}"  class="btn btn-warning" >Add to favourites</a>
-        <hr>
-        <br>
+        <a th:href="@{'/recipes/' + ${recipe.id}}" class="text-decoration-none m-1 atag">
+            <div class="recipe p-2 border-top border-bottom">
+                <h3 th:text="${recipe.title}"></h3>
+                <div class="d-flex">
+                    <h5>Description: </h5>
+                    <h5 th:text=" ${recipe.description}"></h5>
+                </div>
+                <div class="">
+                    <h6 th:text="'Created by: ' + ${recipe.user.username}"></h6>
+                    <small class="text-muted col-5" th:text="'published: ' + ${#dates.format(recipe.dateCreated, 'dd/MM/yyy')}"></small>
+                </div>
+            </div>
+        </a>
     </div>
 </div>
 </body>

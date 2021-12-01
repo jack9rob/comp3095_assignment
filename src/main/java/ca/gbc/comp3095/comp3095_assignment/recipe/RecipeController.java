@@ -53,7 +53,7 @@ public class RecipeController {
         if(search != null) {
             model.addAttribute("recipes", this.recipes.findByTitleIgnoreCase(search));
         } else {
-            model.addAttribute("recipes", this.recipes.findAll());
+            model.addAttribute("recipes", this.recipes.findAllByOrderByDateCreated());
         }
         model.addAttribute("username", principal.getName());
         return "recipe/recipeList";
@@ -83,15 +83,27 @@ public class RecipeController {
     public String viewRecipe(@PathVariable("recipeId") Long recipeId, Model model, Principal principal) {
         Recipe recipe = this.recipes.findById(recipeId);
         ShoppingList list = this.shoppingLists.findByUser(principal.getName());
+        User user = this.users.findByUsername(principal.getName());
         Boolean isOwner = false;
+        Boolean isFavourite = false;
         if(principal.getName().equals(recipe.getUser().getUsername())) {
             isOwner = true;
         }
+
+        // make sure the user hasn't favourited the recipe already
+        for (FavouriteRecipe fav : user.getFavourites()) {
+            if(fav.getRecipe().equals(recipe)) {
+                isFavourite = true;
+                break;
+            }
+        }
+
         model.addAttribute("recipe", recipe);
         model.addAttribute("step", new Step());
         model.addAttribute("ingredient", new Ingredient());
         model.addAttribute("steps", this.steps.findByRecipeIdOrderByStepNumber(recipeId));
         model.addAttribute("isOwner", isOwner);
+        model.addAttribute("isFavourite", isFavourite);
         model.addAttribute("list", list);
         return "recipe/recipeView";
     }
