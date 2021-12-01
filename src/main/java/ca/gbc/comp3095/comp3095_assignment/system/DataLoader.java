@@ -7,6 +7,7 @@ Description: Loads dummy data to the database on startup. Data is cleared each t
  */
 package ca.gbc.comp3095.comp3095_assignment.system;
 
+import ca.gbc.comp3095.comp3095_assignment.event.Event;
 import ca.gbc.comp3095.comp3095_assignment.mealPlan.MealPlan;
 import ca.gbc.comp3095.comp3095_assignment.recipe.Recipe;
 import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.Ingredient;
@@ -32,9 +33,10 @@ public class DataLoader implements ApplicationRunner {
     private final ShoppingListService shoppingRepository;
     private final IngredientService ingredientRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final EventService events;
 
     @Autowired
-    public DataLoader(RecipeService recipes, MealPlanService mealPlans, StepService steps, UserService userRepository, ShoppingListService shoppingRepository, IngredientService ingredientRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public DataLoader(RecipeService recipes, MealPlanService mealPlans, StepService steps, UserService userRepository, ShoppingListService shoppingRepository, IngredientService ingredientRepository, BCryptPasswordEncoder bCryptPasswordEncoder, EventService events) {
         this.recipes = recipes;
         this.mealPlans = mealPlans;
         this.steps = steps;
@@ -42,6 +44,7 @@ public class DataLoader implements ApplicationRunner {
         this.shoppingRepository = shoppingRepository;
         this.ingredientRepository = ingredientRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.events = events;
     }
 
     public void run(ApplicationArguments args) {
@@ -97,5 +100,13 @@ public class DataLoader implements ApplicationRunner {
         list.setUser(user);
         list.getIngredients().add(ing1);
         shoppingRepository.save(list);
+
+        // event
+        Event event = new Event();
+        event.setTitle("First Event");
+        event.setDescription("Description of event");
+        event.setDate(new Date());
+        event.setUser(user);
+        events.save(event);
     }
 }

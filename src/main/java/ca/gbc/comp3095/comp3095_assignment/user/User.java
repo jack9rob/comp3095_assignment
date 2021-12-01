@@ -7,6 +7,7 @@ Description: user class for the app. contains password username, and the sets fo
  */
 package ca.gbc.comp3095.comp3095_assignment.user;
 
+import ca.gbc.comp3095.comp3095_assignment.event.Event;
 import ca.gbc.comp3095.comp3095_assignment.mealPlan.MealPlan;
 import ca.gbc.comp3095.comp3095_assignment.model.BaseEntity;
 import ca.gbc.comp3095.comp3095_assignment.recipe.FavouriteRecipe;
@@ -36,9 +37,6 @@ public class User extends BaseEntity {
     @Column
     private String bio;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private ShoppingList shoppingList;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Recipe> recipes = new HashSet<>();
@@ -48,6 +46,9 @@ public class User extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<FavouriteRecipe> favourites = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Event> events = new HashSet<>();
 
     public Set<Recipe> getRecipes() {
         return recipes;
@@ -129,5 +130,11 @@ public class User extends BaseEntity {
         this.bio = bio;
     }
 
+    public Set<Event> getEvents() {
+        return events;
+    }
 
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
 }

@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
@@ -84,5 +85,35 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("list", list);
         return "user/userProfile";
+    }
+
+    @GetMapping("profile/update")
+    public String initUpdateProfile(Model model, Principal principal) {
+        User user = users.findByUsername(principal.getName());
+        if(user != null) {
+            model.addAttribute("user", user);
+            return "user/userProfileEdit";
+        }
+        return "redirect:/login";
+    }
+
+    @PostMapping("profile/update")
+    public String processUpdateProfile(Model model, String email,
+                                       String firstName, String lastName, String bio, Principal principal) {
+
+
+        User user = users.findByUsername(principal.getName());
+        if(email.isEmpty()|| firstName.isEmpty() || lastName.isEmpty())  {
+            model.addAttribute("error", "please fill out information");
+            model.addAttribute("user", user);
+            return "user/userProfileEdit";
+        }
+        user.setEmail(email);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setBio(bio);
+        users.save(user);
+
+        return "redirect:/profile";
     }
 }

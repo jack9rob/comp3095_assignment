@@ -18,12 +18,11 @@
             <h5 th:text=" ${recipe.description}"></h5>
         </div>
         <div class="d-flex">
-            <h6>Created by: </h6>
-            <h6 th:text=" ${recipe.user.username}"></h6>
+            <h6 th:text="'Created by: ' + ${recipe.user.username}"></h6>
         </div>
         <a th:href="@{'/recipes/' + ${recipe.id}}" class="btn btn-primary">See the details</a>
-        <a th:href="@{'/favourite/' + ${recipe.id}}"  class="btn btn-warning" >Add to favourites</a>
         <a th:href="@{'/plan/' + ${recipe.id}}" class="btn btn-success" >Add to Meal Plan</a>
+        <a th:if="${!#strings.equals(recipe.user.username, username)}" th:href="@{'/favourite/' + ${recipe.id}}"  class="btn btn-warning" >Add to favourites</a>
         <hr>
         <br>
     </div>

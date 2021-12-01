@@ -49,12 +49,13 @@ public class RecipeController {
     }
 
     @RequestMapping({"/recipes", "/"})
-    public String findAll(Model model, String search) {
+    public String findAll(Model model, String search, Principal principal) {
         if(search != null) {
             model.addAttribute("recipes", this.recipes.findByTitleIgnoreCase(search));
         } else {
             model.addAttribute("recipes", this.recipes.findAll());
         }
+        model.addAttribute("username", principal.getName());
         return "recipe/recipeList";
     }
 
@@ -131,12 +132,17 @@ public class RecipeController {
     public String addFavourite(@PathVariable("recipeId") Long recipeId, Principal principal) {
         Recipe recipe = this.recipes.findById(recipeId);
         User user = this.users.findByUsername(principal.getName());
-        if(!user.getFavourites().contains(recipe) && recipe.getUser().getId() != user.getId()) {
-            FavouriteRecipe favouriteRecipe = new FavouriteRecipe();
-            favouriteRecipe.setRecipe(recipe);
-            favouriteRecipe.setUser(user);
-            this.favourites.save(favouriteRecipe);
+
+        // make sure the user hasn't favourited the recipe already
+        for (FavouriteRecipe fav : user.getFavourites()) {
+            if(fav.getRecipe().equals(recipe)) {
+                return String.format("redirect:/recipes/%d", recipeId);
+            }
         }
+        FavouriteRecipe favouriteRecipe = new FavouriteRecipe();
+        favouriteRecipe.setRecipe(recipe);
+        favouriteRecipe.setUser(user);
+        favourites.save(favouriteRecipe);
         return String.format("redirect:/recipes/%d", recipeId);
     }
 

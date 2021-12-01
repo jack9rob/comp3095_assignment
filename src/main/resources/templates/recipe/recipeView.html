@@ -13,8 +13,9 @@
             <small class="text-muted col-2" th:text="'created by: '+ ${recipe.user.getUsername}"></small>
             <small class="text-muted col-3" th:text="'published: ' + ${#dates.format(recipe.dateCreated, 'dd/MM/yyy')}"></small>
         </div>
+        <br>
         <div th:if="${isOwner}">
-            <a th:href="@{${recipeId} + '/edit'}">Edit</a>
+            <a class="text-decoration-none btn-sm btn-primary" th:href="@{${recipeId} + '/edit'}">Edit</a>
         </div>
         <div class="row mt-2"><hr></div>
         <br>
