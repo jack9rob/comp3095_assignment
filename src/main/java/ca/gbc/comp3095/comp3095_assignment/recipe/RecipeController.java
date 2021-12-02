@@ -145,6 +145,11 @@ public class RecipeController {
         Recipe recipe = this.recipes.findById(recipeId);
         User user = this.users.findByUsername(principal.getName());
 
+        // owners aren't allow to favourite their own recipes
+        if(recipe.getUser().getUsername().equals(user.getUsername())) {
+            return String.format("redirect:/recipes/%d", recipeId);
+        }
+
         // make sure the user hasn't favourited the recipe already
         for (FavouriteRecipe fav : user.getFavourites()) {
             if(fav.getRecipe().equals(recipe)) {
@@ -177,5 +182,12 @@ public class RecipeController {
         this.mealPlans.save(mealPlan);
 
         return "redirect:/profile";
+    }
+
+    @GetMapping("/myrecipes")
+    public String viewUserRecipes(Principal principal, Model model) {
+        User user = users.findByUsername(principal.getName());
+        model.addAttribute("user", user);
+        return "recipe/recipeUser";
     }
 }

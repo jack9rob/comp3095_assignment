@@ -12,8 +12,8 @@
         <div class="row align-items-center">
             <small class="text-muted col-2" th:text="'created by: '+ ${recipe.user.getUsername}"></small>
             <small class="text-muted col-5" th:text="'published: ' + ${#dates.format(recipe.dateCreated, 'dd/MM/yyy')}"></small>
-            <a th:if="${!isFavourite}" th:href="@{'/favourite/' + ${recipe.id}}"  class="text-decoration-none btn-sm btn-warning col-1" >favourite</a>
-            <small th:unless="${!isFavourite}" class="text-muted col-1">favourited</small>
+            <a th:if="${!isFavourite && !isOwner}" th:href="@{'/favourite/' + ${recipe.id}}"  class="text-decoration-none btn-sm btn-warning col-1" >favourite</a>
+            <small th:unless="${!isFavourite && !isOwner}" class="text-muted col-1">favourited</small>
         </div>
         <br>
         <div th:if="${isOwner}">
