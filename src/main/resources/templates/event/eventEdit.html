@@ -17,9 +17,10 @@
         <a class="text-decoration-none btn-sm btn-danger" th:href="@{'/events/' + ${eventId}}">Cancel</a>
         <br>
         <div class="row mt-2"></div>
+        <h4>Description:</h4>
         <br>
         <div class="row">
-            <h2 class="col-3 text-center" th:text="${event.description}"></h2>
+            <div class="form-group"><label> Description : <textarea th:text="${event.description}" class="form-control" type="text" cols="30" rows="5" name="description"></textarea> </label></div>
         </div>
     </div>
     <hr>
