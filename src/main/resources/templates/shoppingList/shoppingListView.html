@@ -12,14 +12,18 @@
     <hr>
     <div th:if="${shoppingList.ingredients.size() != 0}">
         <div th:each="ingredient : ${shoppingList.ingredients}">
-            <h3 th:text="${ingredient.name}"></h3>
-            <div class="d-flex">
-                <h5>Amount: </h5>
-                <h5 th:text=" ${ingredient.amount}"></h5>
+            <div class="border border-2 border-secondary rounded p-4 d-flex justify-content-between">
+                <div>
+                    <h3 th:text="${ingredient.name}"></h3>
+                    <div class="d-flex">
+                        <h5>Amount: </h5>
+                        <h5 th:text=" ${ingredient.amount}"></h5>
+                    </div>
+                </div>
+                <div>
+                    <a th:href="@{'/shoppinglist/delete/' + ${ingredient.id}}" class="btn btn-danger">Remove</a>
+                </div>
             </div>
-            <a th:href="@{'/shoppinglist/delete/' + ${ingredient.id}}" class="btn btn-primary">Remove</a>
-
-            <hr>
             <br>
         </div>
     </div>
