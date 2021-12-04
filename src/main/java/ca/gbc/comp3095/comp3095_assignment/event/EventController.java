@@ -32,7 +32,7 @@ public class EventController {
         return "event/eventView";
     }
 
-    @GetMapping("/events/${eventId}")
+    @GetMapping("/events/{eventId}")
     public String viewEventDetails(@PathVariable("eventId") Long eventId, Model model,
                             Principal principal){
         Event event = this.events.findById(eventId);
@@ -48,7 +48,7 @@ public class EventController {
         return "event/eventDetails";
     }
 
-    @RequestMapping("/events/${eventId}/edit")
+    @RequestMapping("/events/{eventId}/edit")
     public String initEditEvent(@PathVariable("eventId") Long eventId, Principal principal,
                                 Model model){
         Event event = this.events.findById(eventId);
