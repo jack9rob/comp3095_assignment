@@ -16,16 +16,14 @@
         <br>
         <a class="text-decoration-none btn-sm btn-danger" th:href="@{'/recipes/' + ${recipeId}}">Cancel</a>
         <br>
-        <div class="row mt-2"><hr></div>
+        <div class="row mt-2"></div>
         <br>
         <div class="row">
-            <h3 class="col-10 text-center" th:text="${recipe.description}"></h3>
+            <h2 class="col-3 text-center" th:text="${recipe.description}"></h2>
         </div>
     </div>
-
+    <hr>
     <br>
-    <br>
-
     <div class="row">
         <div class="col-9">
             <div class="row">
@@ -60,43 +58,36 @@
         </div>
         <div class="col-3">
             <div class="row">
-                <!-- Step Creation -->
-                <h4 class="text-center">Add a new Step</h4>
-                <div class="d-flex justify-content-center">
-                    <div>
-                        <form th:object="${step}" th:action="@{/recipes/new/step}" method="post">
-                            <div class="form-group"><label> Step description: <input class="form-control input-lg" type="text" th:field="*{stepDescription}"/> </label></div>
-                            <br>
-                            <div class="form-group"><input class="form-control input-lg" name="recipeId" type="hidden" th:value="${recipe.getId()}"/></div>
-                            <div class="form-group"><input class="btn btn-primary mt-2" type="submit" value="Add Step"/></div>
-                        </form>
+                <div>
+                    <!-- Step Creation -->
+                    <h4 class="text-center">Add a new Step</h4>
+                    <div class="d-flex justify-content-center">
+                        <div>
+                            <form th:object="${step}" th:action="@{/recipes/new/step}" method="post">
+                                <div class="form-group"><label> Step description: <input class="form-control input-lg" type="text" th:field="*{stepDescription}"/> </label></div>
+                                <br>
+                                <div class="form-group"><input class="form-control input-lg" name="recipeId" type="hidden" th:value="${recipe.getId()}"/></div>
+                                <div class="form-group"><input class="btn btn-primary mt-2" type="submit" value="Add Step"/></div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-
-
-                <br>
-
-                <!-- Ingredient Creation -->
-
-                <h4 class="text-center">Add a new Ingredient</h4>
-                <div class="d-flex justify-content-center">
-                    <div>
-                        <form th:object="${ingredient}" th:action="@{/ingredient/new}" method="post">
-                            <div class="form-group"><label> Ingredient Name: <input class="form-control" type="text" th:field="*{name}"/></label></div>
-                            <div class="form-group"><label> Ingredient Amount:  <input class="form-control" type="text" th:field="*{amount}"/></label></div>
-                            <input type="hidden" name="recipeId" th:value="${recipe.getId()}"/>
-                            <div class="form-group"><input class="btn btn-primary mt-2" type="submit" value="Add Ingredient"/></div>
-                        </form>
+                <div>
+                    <!-- Ingredient Creation -->
+                    <h4 class="text-center mt-4">Add a new Ingredient</h4>
+                    <div class="d-flex justify-content-center">
+                        <div>
+                            <form th:object="${ingredient}" th:action="@{/ingredient/new}" method="post">
+                                <div class="form-group"><label> Ingredient Name: <input class="form-control" type="text" th:field="*{name}"/></label></div>
+                                <div class="form-group"><label> Ingredient Amount:  <input class="form-control" type="text" th:field="*{amount}"/></label></div>
+                                <input type="hidden" name="recipeId" th:value="${recipe.getId()}"/>
+                                <div class="form-group"><input class="btn btn-primary mt-4" type="submit" value="Add Ingredient"/></div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
-
-
     </div>
 </div>
 </body>

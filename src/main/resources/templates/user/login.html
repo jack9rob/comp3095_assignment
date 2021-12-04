@@ -6,7 +6,7 @@
   <title>Login</title>
 </head>
 <body>
-<div th:replace="common/navbar :: common-navbar"></div>
+<div th:replace="common/nonUserNavbar :: common-navbar"></div>
   <div class="mt-5">
     <div class="text-center text-danger mb-2" th:if="${param.error}">
       Invalid username and/or password.
