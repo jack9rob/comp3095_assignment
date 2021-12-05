@@ -17,15 +17,23 @@
 </head>
 <body>
 <div th:replace="common/navbar :: common-navbar"></div>
+<div class="container">
 <div class="row justify-content-center">
-    <div class="col-xl-4">
+    <div class="col-xl-6">
         <h1 class="text-center m-4">Profile</h1>
-        <a class="btn btn-sm btn-primary m-4" th:href="@{profile/update}">Edit Info</a>
+        <div class="d-flex justify-content-between">
+            <a class="btn btn-sm btn-primary m-4" th:href="@{profile/update}">Edit Info</a>
+            <a class="btn btn-sm btn-warning m-4" th:href="@{user/changepassword}">Change Password</a>
+        </div>
+
         <div class="row">
-            <div class="col-4">
-                <img alt="profile-picture" src="static/profile-pic.png"/>
-            </div>
             <div class="col-8 d-flex justify-content-around">
+                <div th:if="${user.image != null}" class="col-4">
+                    <img alt="" th:src="*{'data:image/jpeg;base64,'+user.image}" style="width: 100px;height: 100px;">
+                </div>
+                <div th:unless="${user.image != null}" class="col-4">
+                    <img alt="" src="../../static/profile-pic.png" style="width: 100px;height: 100px;">
+                </div>
                 <div>
                     <h5>Username: </h5>
                     <h5>First Name: </h5>
@@ -45,42 +53,7 @@
             <h6 th:text="${user.getBio() ?: 'No bio provided'}" class="text-break"></h6>
         </div>
     </div>
-    <div class="col-xl-7">
-        <h1 class="text-center">Recipes</h1>
-        <br>
-        <div th:each="recipe : ${user.getRecipes()}">
-            <a class="text-decoration-none atag" th:href="@{'recipes/' + ${recipe.id}}">
-                <div class="hoveritem border border-2 border-secondary rounded p-4 row">
-                    <div class="col">
-                        <h5 class="text-center text-uppercase" th:text="${recipe.title}"></h5>
-                        <h6 class="text-center" th:text="${recipe.description}"></h6>
-                    </div>
-                    <div class="col-6">
-                        <p class="text-center" th:text="${#dates.format(recipe.dateCreated, 'dd/MM/yyy')}"></p>
-                        <p class="text-center" th:text="${#dates.format(recipe.dateCreated, 'HH:MM')}"></p>
-                    </div>
-                </div>
-            </a>
-            <br>
-        </div>
-        <hr>
-        <br>
-        <h1 class="text-center">Favourites</h1>
-        <br>
-        <div th:if="${user.getFavourites().size() > 0}">
-            <div th:each="favourite : ${user.getFavourites()}">
-                <a class="text-decoration-none atag" th:href="@{'recipes/' + ${favourite.recipe.id}}">
-                    <div class="border border-2 border-secondary rounded p-4 hoveritem">
-                        <h5 class="text-center text-uppercase" th:text="${favourite.recipe.title}"></h5>
-                    </div>
-                </a>
-                <br>
-            </div>
-        </div>
-        <div th:unless="${user.getFavourites().size()}">
-            <h5 class="text-center">No favourites recipes added yet!</h5>
-        </div>
-        <hr>
+    <div class="col-xl-6">
         <br>
         <h1 class="text-center">Meal Plan</h1>
         <br>
@@ -100,6 +73,7 @@
             <br>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

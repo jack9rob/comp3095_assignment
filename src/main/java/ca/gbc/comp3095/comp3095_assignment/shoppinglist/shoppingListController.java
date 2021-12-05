@@ -4,14 +4,21 @@ import ca.gbc.comp3095.comp3095_assignment.recipe.ingredient.Ingredient;
 import ca.gbc.comp3095.comp3095_assignment.services.IngredientService;
 import ca.gbc.comp3095.comp3095_assignment.services.ShoppingListService;
 import ca.gbc.comp3095.comp3095_assignment.services.UserService;
+import ca.gbc.comp3095.comp3095_assignment.system.ShoppingListPDFExporter;
 import ca.gbc.comp3095.comp3095_assignment.user.User;
+import com.lowagie.text.DocumentException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 public class shoppingListController {
@@ -59,5 +66,22 @@ public class shoppingListController {
             shoppingLists.save(list);
         }
         return String.format("redirect:/shoppinglist");
+    }
+
+    @GetMapping("/shoppinglist/export")
+    public void exportToPDF(HttpServletResponse response, Principal principal) throws DocumentException, IOException {
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        ShoppingList list = shoppingLists.findByUser(principal.getName());
+
+        ShoppingListPDFExporter exporter = new ShoppingListPDFExporter(list);
+        exporter.export(response);
+
     }
 }

@@ -10,6 +10,7 @@
     <h1 class="text-center">My Shopping List</h1>
     <br>
     <hr>
+    <a th:href="@{/shoppinglist/export}">Export</a>
     <div th:if="${shoppingList.ingredients.size() != 0}">
         <div th:each="ingredient : ${shoppingList.ingredients}">
             <div class="border border-2 border-secondary rounded p-4 d-flex justify-content-between">

@@ -39,7 +39,10 @@
                     </div>
                 </div>
                 <div>
-                    <a class="btn btn-danger">Delete</a>
+                    <form method="post" th:action="@{events/delete}">
+                        <button class="btn btn-danger" type="Submit">Delete</button>
+                        <input type="hidden" th:value="${event.id}" name="eventId"/>
+                    </form>
                 </div>
             </div>
         </a>

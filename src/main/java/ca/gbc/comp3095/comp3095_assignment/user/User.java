@@ -13,6 +13,7 @@ import ca.gbc.comp3095.comp3095_assignment.model.BaseEntity;
 import ca.gbc.comp3095.comp3095_assignment.recipe.FavouriteRecipe;
 import ca.gbc.comp3095.comp3095_assignment.recipe.Recipe;
 import ca.gbc.comp3095.comp3095_assignment.shoppinglist.ShoppingList;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -32,6 +33,7 @@ public class User extends BaseEntity {
     private String firstName;
     @Column
     private String lastName;
+    @Lob
     @Column
     private String image;
     @Column

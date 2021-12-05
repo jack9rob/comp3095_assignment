@@ -37,11 +37,15 @@ public class EventController {
     }
 
     @PostMapping("/events/new")
-    public String processCreateEvent(Event event, BindingResult result, Principal principal){
+    public String processCreateEvent(Event event, BindingResult result, Principal principal, Model model){
         if(result.hasErrors()) {
             return "event/eventCreate";
         }else{
-            User user = users.findByUsername(principal.getName());
+            if(event.getTitle().isEmpty() || event.getDescription().isEmpty()) {
+                model.addAttribute("event", event);
+                return "event/eventCreate";
+            }
+                User user = users.findByUsername(principal.getName());
             event.setUser(user);
             this.events.save(event);
             return "redirect:/events";
@@ -83,11 +87,24 @@ public class EventController {
     }
 
     @PostMapping("/events/{eventId}/edit")
-    public String processUpdateEvent(@PathVariable("eventId") Long eventId, String title, String description){
+    public String processUpdateEvent(@PathVariable("eventId") Long eventId, String title, String description, Model model){
         Event event = this.events.findById(eventId);
+        if(title.isEmpty() || description.isEmpty()) {
+            model.addAttribute("event", event);
+            return "event/eventEdit";
+        }
         event.setTitle(title);
         event.setDescription(description);
         events.save(event);
+        return "redirect:/events";
+    }
+
+    @PostMapping("/events/delete")
+    public String deleteEvent(Long eventId, Principal principal) {
+        Event event = events.findById(eventId);
+        if(event.getUser().getUsername().equals(principal.getName())) {
+            events.deleteById(eventId);
+        }
         return "redirect:/events";
     }
 }

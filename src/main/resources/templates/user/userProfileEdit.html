@@ -15,7 +15,7 @@
             <div th:if="${error != null}">
                 <p class="text-danger" th:text="${error}"></p>
             </div>
-            <form th:action="@{/profile/update}" method="post">
+            <form th:action="@{/profile/update}" method="post" enctype="multipart/form-data">
                 <br>
                 <div class="form-group"><label> First Name : <input th:value="${user.firstName}" class="form-control" type="text" name="firstName"/> </label></div>
                 <br>
@@ -28,7 +28,7 @@
                 <br>
                 <div class="form-group">
                     <label class="form-label" for="customFile">Choose your profile picture :</label>
-                    <input type="file" class="form-control" id="customFile" />
+                    <input type="file" class="form-control" name="image" id="customFile" />
                 </div>
                 <br>
                 <div class="d-flex justify-content-between mt-2 form-group">
