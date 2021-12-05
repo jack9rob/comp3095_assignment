@@ -20,21 +20,26 @@
 <div class="container d-flex flex-column justify-content-center">
     <h1 class="text-center">My Events</h1>
     <br>
-    <a class="btn btn-primary btn-sm" >ADD A NEW EVENT</a>
+    <a class="btn btn-primary btn-sm" th:href="@{/events/new}">ADD A NEW EVENT</a>
     <hr>
     <div th:each="event : ${user.events}">
         <a th:href="@{'/events/' + ${event.id}}" class="text-decoration-none m-1 atag">
-            <div class="hoveritem border border-2 border-secondary rounded p-4">
-                <h3 th:text="${event.title}"></h3>
-                <div class="d-flex">
-                    <h5>Description: </h5>
-                    <h5 th:text=" ${event.description}"></h5>
-                </div>
-                <div class="d-flex">
-                    <h6 th:text="'Created by: ' + ${event.user.username}"></h6>
+            <div class="hoveritem border border-2 border-secondary rounded p-4 d-flex justify-content-between">
+                <div>
+                    <h3 th:text="${event.title}"></h3>
+                    <div class="d-flex">
+                        <h5>Description: </h5>
+                        <h5 th:text=" ${event.description}"></h5>
+                    </div>
+                    <div class="d-flex">
+                        <h6 th:text="'Created by: ' + ${event.user.username}"></h6>
+                    </div>
+                    <div>
+                        <small class="text-muted col-3" th:text="'Date: ' + ${#dates.format(event.date, 'dd/MM/yyyy')}"></small>
+                    </div>
                 </div>
                 <div>
-                    <small class="text-muted col-3" th:text="'Date: ' + ${#dates.format(event.date, 'dd/MM/yyyy')}"></small>
+                    <a class="btn btn-danger">Delete</a>
                 </div>
             </div>
         </a>

@@ -17,10 +17,15 @@
         <a class="text-decoration-none btn-sm btn-danger" th:href="@{'/events/' + ${eventId}}">Cancel</a>
         <br>
         <div class="row mt-2"></div>
-        <h4>Description:</h4>
         <br>
         <div class="row">
-            <div class="form-group"><label> Description : <textarea th:text="${event.description}" class="form-control" type="text" cols="30" rows="5" name="description"></textarea> </label></div>
+            <form th:object="${event}" th:action="@{'/events/' + ${eventId.toString()} + '/edit'}" method="post">
+                <div class="form-group"><label> Title : <input th:value="${event.title}" class="form-control" type="text" name="title"/> </label></div>
+                <br>
+                <div class="form-group"><label> Description : <textarea th:text="${event.description}" class="form-control" type="text" cols="30" rows="5" name="description"></textarea> </label></div>
+                <input type="hidden" name="eventId" th:value="${event.getId()}"/>
+                <div class="form-group"><input class="btn btn-primary mt-4" type="submit" value="Update Event"/></div>
+            </form>
         </div>
     </div>
     <hr>

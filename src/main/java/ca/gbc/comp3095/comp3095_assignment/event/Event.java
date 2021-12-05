@@ -5,6 +5,8 @@ import ca.gbc.comp3095.comp3095_assignment.user.User;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "events")
